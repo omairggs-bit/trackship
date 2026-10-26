@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111F">
+<title>السلة | Track Ship</title>
+<meta name="description" content="سلة شحنات Track Ship. بعد المراجعة يكتمل الطلب في متجر تراك سيستمز.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand" aria-label="Track Ship">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M5 23c4-7 8-10 12-9" stroke="#E10600" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E10600"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+      <span class="brand-text"><span class="brand-en">Track <i>Ship</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستمز</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" data-i18n="nav_home">الرئيسية</a>
+      <a href="index.html#services" data-i18n="nav_services">الخدمات</a>
+      <a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a>
+      <a href="cart.html" aria-current="page" data-i18n="nav_cart">السلة</a>
+      <a href="contact.html" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ar">AR</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ur">UR</button>
+      </div>
+      <a class="icon-cart" href="cart.html" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+        <span class="cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a href="calculator.html" class="btn btn-primary btn-sm" data-i18n="nav_order">اطلب شحن</a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap section-tight">
+  <div class="page-hero">
+    <span class="kicker" data-i18n="cart_kicker">السلة</span>
+    <h1 data-i18n="cart_h">شحناتك الجاهزة</h1>
+  </div>
+  <div class="empty" id="cartEmpty">
+    <h2 data-i18n="cart_empty">السلة فارغة</h2>
+    <p class="lede" data-i18n="cart_empty_p">ابدأ من أيقونة الخدمة في الرئيسية.</p>
+    <p style="margin-top:16px"><a class="btn btn-primary" href="index.html#services" data-i18n="cart_go">اختيار خدمة</a></p>
+  </div>
+  <div class="cart-layout" id="cartLayout" hidden>
+    <div>
+      <div id="cartList"></div>
+      <a class="btn btn-line" href="calculator.html" data-i18n="cart_add">إضافة شحنة أخرى</a>
+    </div>
+    <aside class="totals">
+      <div class="row"><span data-i18n="cart_sub">قبل الضريبة</span><strong id="cartSubtotal">0</strong></div>
+      <div class="row"><span data-i18n="cart_vat">ضريبة 15٪</span><strong id="cartVat">0</strong></div>
+      <div class="row"><span data-i18n="cart_total">الإجمالي</span></div>
+      <div class="amount" id="cartTotal">0</div>
+      <p class="hint" data-i18n="cart_note">أكمل الدفع وتأكيد الطلب في متجر تراك سيستمز. احتفظ برقم الشحنة.</p>
+      <a class="btn btn-primary btn-block" style="margin-top:14px" href="https://stor.tracksystems.com.sa/" data-i18n="cart_checkout">الانتقال إلى المتجر</a>
+      <button class="btn btn-line btn-block" style="margin-top:8px" type="button" id="copyOrder" data-i18n="cart_copy">نسخ تفاصيل الطلب</button>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span><a href="https://stor.tracksystems.com.sa/">stor.tracksystems.com.sa</a></div>
+</footer>
+<script src="i18n.js"></script>
+<script src="calculator.js"></script>
+</body>
+</html>

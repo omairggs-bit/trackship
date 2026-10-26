@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111F">
+<title>Track Ship | تراك سيستمز للشحن</title>
+<meta name="description" content="Track Ship من شركة تراك سيستمز: شحن جاف ومبرّد داخل السعودية، شحن دولي، ومسار مستقل إلى السودان.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand" aria-label="Track Ship">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M5 23c4-7 8-10 12-9" stroke="#E10600" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E10600"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+      <span class="brand-text"><span class="brand-en">Track <i>Ship</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستمز</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" aria-current="page" data-i18n="nav_home">الرئيسية</a>
+      <a href="index.html#services" data-i18n="nav_services">الخدمات</a>
+      <a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a>
+      <a href="cart.html" data-i18n="nav_cart">السلة</a>
+      <a href="contact.html" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ar">AR</button>
+        <button type="button" data-lang="en">EN</button>
+        <button type="button" data-lang="ur">UR</button>
+      </div>
+      <a class="icon-cart" href="cart.html" aria-label="Cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
+        <span class="cart-count" data-cart-count hidden>0</span>
+      </a>
+      <a href="calculator.html" class="btn btn-primary btn-sm" data-i18n="nav_order">اطلب شحن</a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker" style="color:#ffb4ae" data-i18n="hero_eyebrow">شركة تراك سيستمز للخدمات اللوجستية</span>
+        <p class="wordmark">Track <i>Ship</i></p>
+        <h1 data-i18n="hero_h1">من بابك إلى وجهتك، بسعر واضح.</h1>
+        <p class="lede" data-i18n="hero_lede">Track Ship تنقل الطرود الجافة والمبرّدة داخل المملكة، والشحن الدولي إلى أي دولة ومدينة، وفي مسار مستقل إلى مدن السودان.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#services" data-i18n="hero_cta1">اختر خدمة الشحن</a>
+          <a class="btn btn-ghost" href="tracking.html" data-i18n="hero_cta2">تتبع شحنة</a>
+        </div>
+        <div class="hero-stats">
+          <div><b data-i18n="hero_stat1_n">4</b><span data-i18n="hero_stat1_l">مسارات شحن</span></div>
+          <div><b data-i18n="hero_stat2_n">15%</b><span data-i18n="hero_stat2_l">ضريبة ظاهرة</span></div>
+          <div><b data-i18n="hero_stat3_n">0</b><span data-i18n="hero_stat3_l">اشتراك شهري</span></div>
+        </div>
+      </div>
+      <div class="waybill">
+        <div class="waybill-top">
+          <strong class="brand-en" style="font-size:18px">Track <i>Ship</i></strong>
+          <span class="pill" data-i18n="waybill_tag">بوليصة</span>
+        </div>
+        <div class="waybill-route"><span data-i18n="waybill_from">من الرياض</span><em>→</em><span data-i18n="waybill_to">إلى جدة</span></div>
+        <div class="waybill-meta" data-i18n="waybill_meta">شحن جاف · 3.4 كجم</div>
+        <div class="waybill-no" data-i18n="waybill_no">TS-774213-SA</div>
+        <div class="barcode" id="heroBarcode"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap services" id="services">
+    <div class="sec-head">
+      <span class="kicker" data-i18n="services_kicker">الخدمات</span>
+      <h2 data-i18n="services_h2">أربع طرق للشحن</h2>
+      <p data-i18n="services_p">كل أيقونة تفتح صفحة الطلب: الوزن والوجهة وبيانات المرسل والمستلم، ثم السلة.</p>
+    </div>
+    <div class="svc-grid">
+      <a class="svc svc-dry" href="calculator.html?service=dry">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7.5 12 3l9 4.5-9 4.5L3 7.5Z"/><path d="M3 7.5V16.5L12 21l9-4.5V7.5"/><path d="M12 12v9"/></svg></span>
+        <div>
+          <h3 data-i18n="svc1_h">شحن جاف محلي</h3>
+          <p data-i18n="svc1_p">طرود عادية بين مدن المملكة. تحدد الوزن والوجهة وبيانات الطرفين.</p>
+        </div>
+        <div class="svc-foot"><b data-from="dry">من 25.30 ر.س</b><span data-i18n="svc_go">ابدأ الطلب</span></div>
+      </a>
+      <a class="svc svc-cold" href="calculator.html?service=cold">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"/><path d="M7 4.2 12 7.2 17 4.2M7 19.8 12 16.8 17 19.8M3.2 12h4.2M16.6 12h4.2"/></svg></span>
+        <div>
+          <h3 data-i18n="svc2_h">شحن مبرّد</h3>
+          <p data-i18n="svc2_p">نفس بيانات الشحن المحلي، مع درجة الحرارة التي تحتاجها الشحنة.</p>
+        </div>
+        <div class="svc-foot"><b data-from="cold">من 48.30 ر.س</b><span data-i18n="svc_go">ابدأ الطلب</span></div>
+      </a>
+      <a class="svc svc-intl" href="calculator.html?service=intl">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.8 3.8 6 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-6-3.8-9s1.3-6.2 3.8-9Z"/></svg></span>
+        <div>
+          <h3 data-i18n="svc3_h">شحن دولي</h3>
+          <p data-i18n="svc3_p">الوزن والمحتويات والدولة والمدينة وبيانات الطرفين. التوصيل السريع واستلام الباب خياران واضحان.</p>
+        </div>
+        <div class="svc-foot"><b data-from="intl">من 109.25 ر.س</b><span data-i18n="svc_go">ابدأ الطلب</span></div>
+      </a>
+    </div>
+
+    <a class="sudan-banner" href="calculator.html?service=sudan">
+      <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+      <div>
+        <span class="kicker" style="color:#A7F3D0" data-i18n="svc4_note">خدمة قائمة بذاتها</span>
+        <h3 data-i18n="svc4_h">الشحن إلى السودان</h3>
+        <p data-i18n="svc4_p">مسار مستقل: الوزن، ومدينة من مدن السودان، والمحتويات، وبيانات المرسل والمستلم.</p>
+      </div>
+      <div>
+        <span class="sudan-go" data-i18n="svc_go">ابدأ الطلب</span>
+        <span class="sudan-price" data-from="sudan">من 71.30 ر.س</span>
+      </div>
+    </a>
+
+    <div class="sec-head" style="margin-top:36px">
+      <span class="kicker" data-i18n="addon_kicker">خدمات مقدمة</span>
+    </div>
+    <div class="addon-showcase">
+      <a class="addon-tile express" href="calculator.html?service=intl&express=1">
+        <span class="mark" aria-hidden="true">⚡</span>
+        <span>
+          <h3 data-i18n="addon_express_h">توصيل سريع</h3>
+          <p data-i18n="addon_express_p">شحنتك تأخذ أولوية في الاستلام والنقل. خط ذهبي، وتختارها داخل الطلب.</p>
+          <b data-from="express">من 17.25 ر.س</b>
+        </span>
+      </a>
+      <a class="addon-tile pickup" href="calculator.html?service=intl&pickup=1">
+        <span class="mark" aria-hidden="true">🚪</span>
+        <span>
+          <h3 data-i18n="addon_pickup_h">استلام من الباب</h3>
+          <p data-i18n="addon_pickup_p">نستلم الطرد من عنوان المرسل. خط أزرق، وخدمة مختلفة عن سعر الشحن.</p>
+          <b data-from="pickup">من 41.40 ر.س</b>
+        </span>
+      </a>
+    </div>
+    <p class="addon-note" data-i18n="addon_note">الخدمتان اختياريتان وتظهران داخل الطلب بحد واضح ولون مختلف.</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="how_kicker">الطلب</span>
+        <h2 data-i18n="how_h2">من الأيقونة إلى السلة</h2>
+      </div>
+      <div class="steps">
+        <article class="step"><i>01</i><h3 data-i18n="how1_h">تختار الخدمة</h3><p data-i18n="how1_p">جاف، مبرّد، دولي، أو السودان.</p></article>
+        <article class="step"><i>02</i><h3 data-i18n="how2_h">تكتب البيانات</h3><p data-i18n="how2_p">الوزن والوجهة وبيانات المرسل والمستلم.</p></article>
+        <article class="step"><i>03</i><h3 data-i18n="how3_h">تراجع السلة</h3><p data-i18n="how3_p">السعر قبل الضريبة ثم ضريبة 15٪.</p></article>
+        <article class="step"><i>04</i><h3 data-i18n="how4_h">تكمل في المتجر</h3><p data-i18n="how4_p">الانتقال إلى متجر تراك سيستمز لإتمام الطلب.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="why_kicker">لماذا Track Ship</span>
+        <h2 data-i18n="why_h2">شحن مباشر وواضح</h2>
+      </div>
+      <div class="why-grid">
+        <article class="why"><h3 data-i18n="why1_h">سعر قبل الدفع</h3><p data-i18n="why1_p">ترى تفصيل الوزن والإضافات والضريبة في السلة.</p></article>
+        <article class="why"><h3 data-i18n="why2_h">تبريد بدرجة تحددها</h3><p data-i18n="why2_p">من التبريد العادي حتى التجميد العميق.</p></article>
+        <article class="why"><h3 data-i18n="why3_h">السودان مسار مستقل</h3><p data-i18n="why3_p">مدن السودان لها صفحة وأسعار خاصة.</p></article>
+        <article class="why"><h3 data-i18n="why4_h">تتبع برقم الشحنة</h3><p data-i18n="why4_p">تابع الحالة من صفحة التتبع في أي وقت.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="price_kicker">الأسعار</span>
+        <h2 data-i18n="price_h2">التعرفة قبل الضريبة</h2>
+        <p data-i18n="price_p">الحد الأدنى يشمل حتى 5 كجم. بعدها يُحسب كل كيلوغرام بدأ.</p>
+      </div>
+      <div class="tabs" id="rateTabs">
+        <button type="button" class="tab-btn active" data-rate-tab="local" data-i18n="tab_local">جاف</button>
+        <button type="button" class="tab-btn" data-rate-tab="cold" data-i18n="tab_cold">مبرّد</button>
+        <button type="button" class="tab-btn" data-rate-tab="intl" data-i18n="tab_intl">دولي</button>
+        <button type="button" class="tab-btn" data-rate-tab="sudan" data-i18n="tab_sudan">السودان</button>
+        <button type="button" class="tab-btn" data-rate-tab="extra" data-i18n="tab_extra">إضافات</button>
+      </div>
+      <div id="rateMount"></div>
+      <p class="price-note" data-i18n="price_note">الأرقام في عمود «شامل الضريبة» هي الحد الأدنى بعد إضافة 15٪. التوصيل السريع واستلام الباب يُضافان عند اختيارهما.</p>
+    </div>
+  </section>
+
+  <section class="wrap section-tight">
+    <div class="cta-band">
+      <h2 data-i18n="cta_h2">جهّز شحنتك</h2>
+      <p data-i18n="cta_p">اختر المسار، راجع السلة، ثم أكمل الطلب في المتجر.</p>
+      <a class="btn btn-primary" href="calculator.html" data-i18n="cta_btn">ابدأ الطلب</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-en">Track <i>Ship</i></span>
+      <p data-i18n="foot_about">Track Ship علامة شركة تراك سيستمز للخدمات اللوجستية. شحن من الباب إلى الباب داخل المملكة وإلى الخارج.</p>
+      <div class="social-row">
+        <a href="https://x.com/tracksystems56" aria-label="X">𝕏</a>
+        <a href="https://www.facebook.com/profile.php?id=61594882976986" aria-label="Facebook">f</a>
+        <a href="https://stor.tracksystems.com.sa/" aria-label="Store">▣</a>
+      </div>
+    </div>
+    <div>
+      <h3 data-i18n="foot_links">الصفحات</h3>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+        <li><a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a></li>
+        <li><a href="cart.html" data-i18n="nav_cart">السلة</a></li>
+        <li><a href="contact.html" data-i18n="nav_contact">تواصل معنا</a></li>
+        <li><a href="https://stor.tracksystems.com.sa/">stor.tracksystems.com.sa</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 data-i18n="foot_services">الخدمات</h3>
+      <ul>
+        <li><a href="calculator.html?service=dry" data-i18n="svc1_h">شحن جاف محلي</a></li>
+        <li><a href="calculator.html?service=cold" data-i18n="svc2_h">شحن مبرّد</a></li>
+        <li><a href="calculator.html?service=intl" data-i18n="svc3_h">شحن دولي</a></li>
+        <li><a href="calculator.html?service=sudan" data-i18n="svc4_h">الشحن إلى السودان</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 data-i18n="foot_company">الشركة</h3>
+      <ul>
+        <li data-i18n="foot_addr">حي الدريهمية، شارع صيدا، مبنى 7036، الرياض 12796</li>
+        <li><span data-i18n="foot_short">العنوان الوطني</span>: RBDA7036</li>
+        <li><span data-i18n="foot_cr">السجل التجاري</span>: 7055013747</li>
+        <li><span data-i18n="foot_vat">الرقم الضريبي</span>: 314968452300003</li>
+        <li><a dir="ltr" href="tel:+966597281619">+966 59 728 1619</a></li>
+        <li><a href="mailto:info@tracksystems.com.sa">info@tracksystems.com.sa</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span></div>
+</footer>
+<script src="i18n.js"></script>
+<script src="calculator.js"></script>
+<script>
+  const bars = document.getElementById("heroBarcode");
+  [2,1,3,1,4,2,1,3,1,2,4,1,3,2,1,4,1,2,3,1,2].forEach((w) => {
+    const bar = document.createElement("i");
+    bar.style.width = (w + 1) + "px";
+    bars.appendChild(bar);
+  });
+</script>
+</body>
+</html>

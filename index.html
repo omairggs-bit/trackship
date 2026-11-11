@@ -1,538 +1,259 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#050505">
-  <meta name="description" content="فالكون شيب — شريكك للشحن من الباب إلى الباب. شحن محلي ودولي من الرياض.">
-  <title>FalconShip — شريكك للشحن من الباب إلى الباب</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23050505'/%3E%3Cpath fill='%23c6ff00' d='M7 23c2.2-8.5 8.8-14.8 17.2-16.2L32 4.5c-1.6 4.2-2.2 7-1.6 10.2 4.2-.8 7.8-2.8 11.6-6.2-1.4 5.2-2.6 8.6-2.4 12 .2 3.2 2 6.2 5.4 9.2-5.4.1-9.2-.9-12.2-2.6l-2 7.6-5.8-5.4C19.4 30.2 14.2 29.4 7 23z'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0A1830">
+<title>Track System | تراك سيستم للشحن</title>
+<meta name="description" content="Track System من شركة تراك سيستمز: شحن جاف ومبرّد داخل السعودية، شحن دولي، وشحن إلى السودان. اطلب وأرسل طلبك على واتساب.">
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#main" data-i18n="skip">تخطي إلى المحتوى</a>
+<header class="site-header">
+  <div class="wrap nav">
+    <a href="index.html" class="brand" aria-label="Track System">
+      <span class="brand-mark"><img src="logo.png" alt="" onerror="this.parentNode.classList.add('no-logo');this.remove()"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 23c4-7 8-10 12-9" stroke="#E3141B" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E3141B"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+      <span class="brand-text"><span class="brand-en">Track <i>System</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستم</span></span>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html" aria-current="page" data-i18n="nav_home">الرئيسية</a>
+      <a href="index.html#services" data-i18n="nav_services">الخدمات</a>
+      <a href="index.html#rates" data-i18n="nav_rates">الأسعار</a>
+      <a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a>
+      <a href="contact.html" data-i18n="nav_contact">تواصل معنا</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button type="button" data-lang="ar">AR</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+      <a class="icon-btn" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
+      <a href="calculator.html" class="btn btn-primary btn-sm" data-i18n="nav_order">اطلب شحن</a>
+      <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
 
-  <header class="site-header" id="site-header">
-    <div class="header-inner">
-      <a class="logo" href="#home" data-nav="home" aria-label="FalconShip">
-        <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
-          <path fill="currentColor" d="M3 22.5C6.5 12 15 5.5 24 4.5L31.5 3.2C30 8.5 29.5 12 30 15.5C33.5 14.5 36.5 12.5 39 10C37.5 15.5 36.8 18.5 37 21.5C37.2 24.5 38.5 27.5 40 30C35.5 30 32 29 29 27.2L27.2 34L22 29.2C16.5 30.2 10 29.5 3 22.5Z"/>
-        </svg>
-        <span class="logo-text">
-          <span class="logo-word">Falcon<span>Ship</span></span>
-          <span class="logo-sub" data-i18n="logo.sub">لوجستيات سعودية</span>
-        </span>
+<main>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="kicker" data-i18n="hero_eyebrow">شركة تراك سيستمز للخدمات اللوجستية</span>
+        <p class="wordmark">Track <i>System</i></p>
+        <h1 data-i18n="hero_h1">شحنتك من الباب إلى وجهتها، بطلب واحد على واتساب.</h1>
+        <p class="lede" data-i18n="hero_lede">اختر الخدمة، واكتب الوزن والوجهة وبيانات المرسل والمستلم. يصلنا طلبك كاملًا على واتساب، ونؤكده معك مباشرة.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#services" data-i18n="hero_cta1">اختر خدمة الشحن</a>
+          <a class="btn btn-ghost" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" data-i18n="hero_cta2">تحدث معنا على واتساب</a>
+        </div>
+        <div class="hero-stats">
+          <div><b data-i18n="hero_stat1_n">4</b><span data-i18n="hero_stat1_l">خدمات شحن</span></div>
+          <div><b data-i18n="hero_stat2_n">+60</b><span data-i18n="hero_stat2_l">دولة للشحن الدولي</span></div>
+          <div><b data-i18n="hero_stat3_n">15٪</b><span data-i18n="hero_stat3_l">ضريبة ظاهرة في السعر</span></div>
+        </div>
+      </div>
+      <div class="chat" aria-hidden="true">
+        <div class="chat-top">
+          <span class="avatar"><svg viewBox="0 0 32 32" fill="none"><path d="M5 23c4-7 8-10 12-9" stroke="#E3141B" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E3141B"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+          <span><b data-i18n="chat_title">Track System</b><small data-i18n="chat_status">متصل الآن</small></span>
+        </div>
+        <div class="chat-body">
+          <div class="bubble out"><span data-i18n="chat_msg">طلب شحن جديد</span><time>10:42</time></div>
+          <div class="bubble in"><span data-i18n="chat_reply">وصل طلبك. نؤكد موعد الاستلام الآن.</span><time>10:43</time></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap services" id="services">
+    <div class="svc-grid">
+      <a class="svc svc-dry" href="calculator.html?service=dry">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7.5 12 3l9 4.5-9 4.5L3 7.5Z"/><path d="M3 7.5V16.5L12 21l9-4.5V7.5"/><path d="M12 12v9"/></svg></span>
+        <div>
+          <h3 data-i18n="svc1_h">شحن جاف محلي</h3>
+          <p data-i18n="svc1_p">طرود عادية بين مدن المملكة. الوزن والوجهة وبيانات المرسل والمستلم.</p>
+        </div>
+        <div class="svc-foot"><b data-from="dry">من 25.30 ر.س</b><span class="go" data-i18n="svc_go">ابدأ الطلب</span></div>
       </a>
-
-      <nav class="nav" id="site-nav" aria-label="Primary">
-        <a href="#home" data-nav="home" class="is-active" data-i18n="nav.home">الرئيسية</a>
-        <a href="#calculator" data-nav="calculator" data-i18n="nav.calc">حاسبة السعر</a>
-        <a href="#pickup" data-nav="pickup" data-i18n="nav.pickup">جدولة استلام</a>
-        <a href="#about" data-nav="about" data-i18n="nav.about">عن الشركة</a>
-      </nav>
-
-      <div class="header-actions">
-        <div class="lang-toggle" role="group" aria-label="Language" data-i18n-aria="aria.lang">
-          <button type="button" class="lang-btn is-active" data-lang="ar" aria-pressed="true">ع</button>
-          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      <a class="svc svc-cold" href="calculator.html?service=cold">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2v20M4.5 6.5l15 11M19.5 6.5l-15 11"/><path d="M9 3.5 12 6l3-2.5M9 20.5 12 18l3 2.5"/></svg></span>
+        <div>
+          <h3 data-i18n="svc2_h">شحن مبرّد</h3>
+          <p data-i18n="svc2_p">نفس بيانات الشحن المحلي، مع درجة الحرارة التي تحتاجها شحنتك.</p>
         </div>
-        <a class="btn btn-primary header-cta" href="#calculator" data-nav="calculator">
-          <span data-i18n="cta.quote">حسب السعر</span>
+        <div class="svc-foot"><b data-from="cold">من 48.30 ر.س</b><span class="go" data-i18n="svc_go">ابدأ الطلب</span></div>
+      </a>
+      <a class="svc svc-intl" href="calculator.html?service=intl">
+        <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.8 3.8 6 3.8 9s-1.3 6.2-3.8 9c-2.5-2.8-3.8-6-3.8-9s1.3-6.2 3.8-9Z"/></svg></span>
+        <div>
+          <h3 data-i18n="svc3_h">شحن دولي</h3>
+          <p data-i18n="svc3_p">إلى أي دولة ومدينة. الوزن والمحتويات وبيانات الطرفين، مع التوصيل السريع والاستلام من الباب.</p>
+        </div>
+        <div class="svc-foot"><b data-from="intl">من 109.25 ر.س</b><span class="go" data-i18n="svc_go">ابدأ الطلب</span></div>
+      </a>
+    </div>
+
+    <a class="sudan-banner" href="calculator.html?service=sudan">
+      <span class="svc-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.4"/></svg></span>
+      <div>
+        <span class="kicker" data-i18n="svc4_note">خدمة قائمة بذاتها</span>
+        <h3 data-i18n="svc4_h">الشحن إلى السودان</h3>
+        <p data-i18n="svc4_p">خدمة مستقلة: الوزن، ومدينة من مدن السودان، والمحتويات، وبيانات المرسل والمستلم.</p>
+      </div>
+      <div class="sudan-side">
+        <span class="sudan-go" data-i18n="svc_go">ابدأ الطلب</span>
+        <span class="sudan-price" data-from="sudan">من 71.30 ر.س</span>
+      </div>
+    </a>
+  </section>
+
+  <section class="section" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="addon_kicker">خدمات مقدمة</span>
+        <h2 data-i18n="addon_h2">أضفها إلى أي شحنة</h2>
+        <p data-i18n="addon_p">كل خدمة لها لون وإطار واضح داخل صفحة الطلب، وتظهر في رسالة واتساب عند اختيارها.</p>
+      </div>
+      <div class="addon-grid">
+        <a class="addon-tile express" href="calculator.html?express=1">
+          <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
+          <h3 data-i18n="addon_express_h">توصيل سريع</h3>
+          <p data-i18n="addon_express_p">أولوية في الاستلام والنقل والتسليم.</p>
+          <b data-from="express">من 17.25 ر.س</b>
         </a>
-        <button
-          type="button"
-          class="menu-toggle"
-          id="menu-toggle"
-          aria-controls="site-nav"
-          aria-expanded="false"
-          data-i18n-aria="aria.menu"
-        >
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-          <span class="menu-toggle-bar"></span>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- HOME -->
-    <section class="view is-active" id="view-home" data-view-panel="home">
-      <div class="hero">
-        <div class="hero-grid" aria-hidden="true"></div>
-        <div class="container hero-layout">
-          <div class="hero-copy fade-up">
-            <p class="eyebrow" data-i18n="hero.eyebrow">لوجستيات فاخرة في المملكة</p>
-            <h1>
-              <span data-i18n="hero.title1">نصل بسرعة.</span>
-              <span data-i18n="hero.title2">ننفذ بكفاءة.</span>
-            </h1>
-            <p class="lead" data-i18n="hero.lead">شريكك للشحن من الباب إلى الباب. تغطية داخل المملكة وإلى الخليج وآسيا وأوروبا وأمريكا الشمالية، مع تتبع حتى التسليم.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#calculator" data-nav="calculator">
-                <span data-i18n="cta.quote">حسب السعر</span>
-                <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="currentColor" d="M4 10h10.2l-3.6-3.6L12 5l6 5-6 5-1.4-1.4 3.6-3.6H4z"/></svg>
-              </a>
-              <a class="btn btn-ghost" href="#pickup" data-nav="pickup">
-                <span data-i18n="cta.pickup">جدولة استلام</span>
-              </a>
-            </div>
-            <p class="hero-meta">
-              <span data-i18n="hero.meta">تغطية وطنية · أداء احترافي · التزام بالمواعيد</span>
-            </p>
-          </div>
-
-          <div class="hero-visual fade-up fade-up-delay">
-            <div class="map-card">
-              <svg class="sa-map" viewBox="0 0 520 380" role="img" aria-labelledby="map-title">
-                <title id="map-title" data-i18n="map.title">خريطة تغطية المملكة</title>
-                <defs>
-                  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-                    <feGaussianBlur stdDeviation="2.4" result="b"/>
-                    <feMerge>
-                      <feMergeNode in="b"/>
-                      <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                  </filter>
-                </defs>
-                <path class="sa-land" d="M78 108C108 58 168 36 236 42C310 50 378 82 428 128C452 148 470 172 478 192C482 204 468 212 452 206C468 228 482 258 478 288C472 322 430 348 372 358C312 368 250 364 198 344C154 328 122 298 102 256C80 208 72 160 78 108Z"/>
-                <path class="sa-route" d="M268 198C210 192 160 188 132 208"/>
-                <path class="sa-route" d="M268 198C330 176 390 158 432 168"/>
-                <path class="sa-route sa-route-slow" d="M132 208C168 258 198 308 214 328"/>
-                <circle class="city-dot hub" cx="268" cy="198" r="6"/>
-                <circle class="city-dot" cx="132" cy="208" r="4"/>
-                <circle class="city-dot" cx="432" cy="168" r="4"/>
-                <circle class="city-dot" cx="214" cy="328" r="4"/>
-                <circle class="city-dot" cx="128" cy="112" r="3.5"/>
-                <text class="map-label" x="282" y="190" data-i18n="city.riyadh">الرياض</text>
-                <text class="map-label" x="86" y="198" data-i18n="city.jeddah">جدة</text>
-                <text class="map-label" x="442" y="156" data-i18n="city.dammam">الدمام</text>
-                <text class="map-label" x="228" y="348" data-i18n="city.abha">أبها</text>
-                <text class="map-label" x="140" y="102" data-i18n="city.tabuk">تبوك</text>
-              </svg>
-              <div class="route-chips">
-                <article class="route-chip">
-                  <span class="route-chip-pair" data-i18n="hero.chip1">الرياض ↔ جدة</span>
-                  <strong data-i18n="hero.chip1t">1–2 أيام</strong>
-                  <small data-i18n="hero.chipMeta">مدة التوصيل</small>
-                </article>
-                <article class="route-chip">
-                  <span class="route-chip-pair" data-i18n="hero.chip2">الرياض ↔ الدمام</span>
-                  <strong data-i18n="hero.chip2t">1–2 أيام</strong>
-                  <small data-i18n="hero.chipMeta">مدة التوصيل</small>
-                </article>
-                <article class="route-chip">
-                  <span class="route-chip-pair" data-i18n="hero.chip3">جدة ↔ أبها</span>
-                  <strong data-i18n="hero.chip3t">2–3 أيام</strong>
-                  <small data-i18n="hero.chipMeta">مدة التوصيل</small>
-                </article>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <section class="section carriers" aria-labelledby="carriers-title">
-        <div class="container">
-          <p class="section-kicker" data-i18n="trust.kicker">شركاء التوصيل</p>
-          <h2 id="carriers-title" class="section-title-sm" data-i18n="trust.title">نعتمد شبكات موثوقة داخل المملكة وخارجها</h2>
-          <ul class="carrier-row">
-            <li>Saudi Post</li>
-            <li>Aramex</li>
-            <li>DHL</li>
-            <li>FedEx</li>
-          </ul>
-        </div>
-      </section>
-
-      <section class="section split-section" aria-labelledby="split-title">
-        <div class="container">
-          <p class="section-kicker" data-i18n="split.kicker">الخدمات</p>
-          <h2 id="split-title" class="section-title" data-i18n="split.title">محلي بسرعة. دولي بوضوح.</h2>
-          <div class="split-grid">
-            <article class="split-card">
-              <p class="split-tag" data-i18n="split.domTag">داخل المملكة</p>
-              <h3 data-i18n="split.domTitle">شحن محلي من الباب إلى الباب</h3>
-              <p data-i18n="split.domBody">استلام من مدينتك وتسليم إلى أي مدينة رئيسية خلال 1–3 أيام عمل. مسار واحد، رقم تتبّع واحد، بدون تحويلات غامضة.</p>
-              <p class="split-stat"><span>1–3</span> <span data-i18n="split.domStat">أيام عمل</span></p>
-            </article>
-            <article class="split-card">
-              <p class="split-tag" data-i18n="split.intTag">دولي</p>
-              <h3 data-i18n="split.intTitle">شحن جوي إلى أهم الأسواق</h3>
-              <p data-i18n="split.intBody">الخليج وآسيا وأوروبا وأمريكا الشمالية عبر الجو خلال 5–8 أيام. سعر يُحسب قبل الإرسال، وتتبع حتى التسليم.</p>
-              <p class="split-stat"><span>5–8</span> <span data-i18n="split.intStat">أيام للشحن الجوي</span></p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section why-section" aria-labelledby="why-title">
-        <div class="container">
-          <p class="section-kicker" data-i18n="why.kicker">لماذا فالكون شيب</p>
-          <h2 id="why-title" class="section-title" data-i18n="why.title">طبقة تشغيل أوضح فوق شبكات الشحن</h2>
-          <div class="why-grid">
-            <article class="why-card">
-              <div class="why-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z"/><circle cx="12" cy="10" r="2.2" fill="currentColor"/></svg>
-              </div>
-              <h3 data-i18n="why.c1t">تغطية وطنية</h3>
-              <p data-i18n="why.c1b">من الرياض إلى جدة والدمام ومكة والمدينة وأبها وتبوك — شبكة تصل المدن الرئيسية دون تأخير غير مبرر.</p>
-            </article>
-            <article class="why-card">
-              <div class="why-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 12h4l2-6 4 12 2-6h4"/></svg>
-              </div>
-              <h3 data-i18n="why.c2t">تتبّع لحظي</h3>
-              <p data-i18n="why.c2b">رقم شحنة واحد ومسار واضح عند كل مرحلة: الاستلام، النقل، الخروج للتوصيل، ثم التسليم.</p>
-            </article>
-            <article class="why-card">
-              <div class="why-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 7h16M4 12h10M4 17h7"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M16 14l2 2 4-4"/></svg>
-              </div>
-              <h3 data-i18n="why.c3t">أسعار شفافة</h3>
-              <p data-i18n="why.c3b">احسب سعرك قبل أن تغادر الشحنة بابك. المعادلة ظاهرة، والرقم الذي تراه هو الرقم الذي يُفوتر.</p>
-            </article>
-            <article class="why-card">
-              <div class="why-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M5 19l2.2-6.4A8 8 0 1 1 19 12"/><path fill="currentColor" d="M5 19l4.5-1.2-2.2-2.8z"/></svg>
-              </div>
-              <h3 data-i18n="why.c4t">دعم عبر واتساب</h3>
-              <p data-i18n="why.c4b">فريق العمليات في الرياض يرد على واتساب خلال ساعات العمل. بلا قوائم انتظار وبلا تحويلات بين الأقسام.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section track-section" aria-labelledby="track-title">
-        <div class="container track-layout">
-          <div class="track-intro">
-            <p class="section-kicker" data-i18n="track.kicker">التتبّع</p>
-            <h2 id="track-title" class="section-title" data-i18n="track.title">شحنة واحدة. مسار واضح.</h2>
-            <p class="lead-sm" data-i18n="track.lead">كل شحنة تحمل رقم فالكون شيب، وتظهر مرحلتها الحالية لحظة بلحظة — من الاستلام في الرياض حتى الباب في جدة أو أي مدينة أخرى.</p>
-          </div>
-          <article class="track-card">
-            <header class="track-card-head">
-              <div>
-                <p class="track-id-label" data-i18n="track.idLabel">رقم الشحنة</p>
-                <p class="track-id">FS-8842-RUH</p>
-              </div>
-              <span class="track-status" data-i18n="track.status">خرج للتوصيل</span>
-            </header>
-            <p class="track-route">
-              <span data-i18n="city.riyadh">الرياض</span>
-              <span class="track-arrow" aria-hidden="true"></span>
-              <span data-i18n="city.jeddah">جدة</span>
-            </p>
-            <div class="track-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72" aria-label="72%">
-              <span class="track-bar-fill"></span>
-            </div>
-            <ol class="track-steps">
-              <li class="is-done" data-i18n="track.s1">تم الاستلام</li>
-              <li class="is-done" data-i18n="track.s2">في الطريق</li>
-              <li class="is-current" data-i18n="track.s3">خرج للتوصيل</li>
-              <li data-i18n="track.s4">تم التسليم</li>
-            </ol>
-            <p class="track-note" data-i18n="track.note">نموذج تتبّع تفاعلي</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section reviews-section" aria-labelledby="reviews-title">
-        <div class="container">
-          <p class="section-kicker" data-i18n="rev.kicker">آراء العملاء</p>
-          <h2 id="reviews-title" class="section-title" data-i18n="rev.title">يثق بنا تجّار يشحنون كل أسبوع</h2>
-          <div class="reviews-grid">
-            <blockquote class="review-card">
-              <p data-i18n="rev.1q">التسليم إلى جدة خلال يومين، والتتبّع واضح من الاستلام حتى الباب. صرنا نعتمد عليهم لكل شحناتنا الأسبوعية.</p>
-              <footer>
-                <strong data-i18n="rev.1n">نورة العتيبي</strong>
-                <span data-i18n="rev.1r">مديرة العمليات، متاجر نجد</span>
-              </footer>
-            </blockquote>
-            <blockquote class="review-card">
-              <p data-i18n="rev.2q">حاسبة السعر وفّرت علينا الوقت. الرقم الذي يظهر هو الرقم الذي يُفوتر — وهذا نادر في قطاع الشحن.</p>
-              <footer>
-                <strong data-i18n="rev.2n">فهد القحطاني</strong>
-                <span data-i18n="rev.2r">مؤسس، متجر سدرة</span>
-              </footer>
-            </blockquote>
-            <blockquote class="review-card">
-              <p data-i18n="rev.3q">الشحن المبرّد إلى الدمام وصل بدرجة حرارة مستقرة. التعامل احترافي من جدولة الاستلام حتى التسليم.</p>
-              <footer>
-                <strong data-i18n="rev.3n">لمى الشهري</strong>
-                <span data-i18n="rev.3r">مسؤولة اللوجستيات، مزارع طيبة</span>
-              </footer>
-            </blockquote>
-          </div>
-        </div>
-      </section>
-
-      <section class="section cta-section">
-        <div class="container cta-banner">
-          <div>
-            <h2 data-i18n="cta.title">جاهز تشحن؟</h2>
-            <p data-i18n="cta.lead">احسب سعرك خلال ثوانٍ، أو اطلب استلامًا من بابك اليوم.</p>
-          </div>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#calculator" data-nav="calculator">
-              <span data-i18n="cta.quote">حسب السعر</span>
-            </a>
-            <a class="btn btn-ghost" href="#pickup" data-nav="pickup">
-              <span data-i18n="cta.pickup">جدولة استلام</span>
-            </a>
-          </div>
-        </div>
-      </section>
-    </section>
-
-    <!-- CALCULATOR -->
-    <section class="view" id="view-calculator" data-view-panel="calculator">
-      <div class="page-hero">
-        <div class="container">
-          <p class="section-kicker" data-i18n="calc.kicker">التسعير</p>
-          <h1 data-i18n="calc.title">حاسبة سعر الشحن</h1>
-          <p class="lead" data-i18n="calc.lead">أدخل المسار والوزن ونوع الشحنة. يظهر السعر بالريال مع تفصيل الأساس والوزن وأي تعديل حسب النوع.</p>
-        </div>
-      </div>
-      <div class="container calc-layout">
-        <form class="panel calc-form" id="calc-form" novalidate>
-          <div class="field-row">
-            <div class="field">
-              <label for="calc-from" data-i18n="calc.from">من</label>
-              <select id="calc-from" name="from" required>
-                <option value="riyadh" selected data-i18n="city.riyadh">الرياض</option>
-                <option value="jeddah" data-i18n="city.jeddah">جدة</option>
-                <option value="dammam" data-i18n="city.dammam">الدمام</option>
-                <option value="makkah" data-i18n="city.makkah">مكة</option>
-                <option value="madinah" data-i18n="city.madinah">المدينة</option>
-                <option value="abha" data-i18n="city.abha">أبها</option>
-                <option value="tabuk" data-i18n="city.tabuk">تبوك</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="calc-to" data-i18n="calc.to">إلى</label>
-              <select id="calc-to" name="to" required>
-                <optgroup label="المملكة" data-i18n-label="calc.groupKsa">
-                  <option value="riyadh" data-i18n="city.riyadh">الرياض</option>
-                  <option value="jeddah" selected data-i18n="city.jeddah">جدة</option>
-                  <option value="dammam" data-i18n="city.dammam">الدمام</option>
-                  <option value="makkah" data-i18n="city.makkah">مكة</option>
-                  <option value="madinah" data-i18n="city.madinah">المدينة</option>
-                  <option value="abha" data-i18n="city.abha">أبها</option>
-                  <option value="tabuk" data-i18n="city.tabuk">تبوك</option>
-                </optgroup>
-                <optgroup label="دولي" data-i18n-label="calc.groupInt">
-                  <option value="gcc" data-i18n="region.gcc">دول الخليج</option>
-                  <option value="asia" data-i18n="region.asia">آسيا</option>
-                  <option value="europe" data-i18n="region.europe">أوروبا</option>
-                  <option value="na" data-i18n="region.na">أمريكا الشمالية</option>
-                </optgroup>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="field-head">
-              <label for="calc-weight" data-i18n="calc.weight">الوزن (كجم)</label>
-              <span class="weight-readout"><span id="weight-value">2</span> kg</span>
-            </div>
-            <input id="calc-weight" name="weight" type="range" min="0.5" max="50" step="0.5" value="2">
-            <div class="weight-scale" aria-hidden="true"><span>0.5</span><span>50</span></div>
-          </div>
-
-          <fieldset class="field">
-            <legend data-i18n="calc.type">نوع الشحنة</legend>
-            <div class="choice-grid" role="radiogroup">
-              <label class="choice">
-                <input type="radio" name="type" value="documents">
-                <span data-i18n="calc.documents">مستندات</span>
-                <small data-i18n="calc.documentsHint">× 0.85</small>
-              </label>
-              <label class="choice">
-                <input type="radio" name="type" value="parcels" checked>
-                <span data-i18n="calc.parcels">طرود</span>
-                <small data-i18n="calc.parcelsHint">سعر أساسي</small>
-              </label>
-              <label class="choice">
-                <input type="radio" name="type" value="refrigerated">
-                <span data-i18n="calc.refrigerated">مبرّد</span>
-                <small data-i18n="calc.refrigeratedHint">× 1.35</small>
-              </label>
-            </div>
-          </fieldset>
-
-          <div class="field">
-            <label for="calc-service" data-i18n="calc.service">الخدمة</label>
-            <input id="calc-service" type="text" readonly value="" aria-live="polite">
-          </div>
-        </form>
-
-        <aside class="panel quote-card" aria-live="polite">
-          <p class="quote-kicker" data-i18n="calc.quote">عرض السعر</p>
-          <p class="quote-route" id="quote-route">الرياض → جدة</p>
-          <p class="quote-total"><span id="quote-total">32</span> <span class="quote-currency" id="quote-currency">ر.س</span></p>
-          <p class="quote-eta" id="quote-eta"></p>
-          <dl class="quote-breakdown" id="quote-breakdown"></dl>
-          <p class="form-error" id="quote-error" hidden></p>
-          <button type="button" class="btn btn-primary btn-block" id="copy-quote">
-            <span data-i18n="calc.copy">نسخ ملخص العرض</span>
-          </button>
-        </aside>
-      </div>
-    </section>
-
-    <!-- PICKUP -->
-    <section class="view" id="view-pickup" data-view-panel="pickup">
-      <div class="page-hero">
-        <div class="container">
-          <p class="section-kicker" data-i18n="pickup.kicker">الاستلام</p>
-          <h1 data-i18n="pickup.title">جدولة استلام من الباب</h1>
-          <p class="lead" data-i18n="pickup.lead">أدخل بياناتك ونافذة الوقت. نؤكد الموعد عبر واتساب ونرسل رقم مرجع فور تسجيل الطلب.</p>
-        </div>
-      </div>
-      <div class="container pickup-layout">
-        <form class="panel pickup-form" id="pickup-form" novalidate>
-          <div class="field-row">
-            <div class="field">
-              <label for="pickup-name" data-i18n="pickup.name">الاسم الكامل</label>
-              <input id="pickup-name" name="name" type="text" autocomplete="name" required minlength="2">
-              <p class="field-error" id="err-name" hidden></p>
-            </div>
-            <div class="field">
-              <label for="pickup-phone" data-i18n="pickup.phone">الجوال</label>
-              <input id="pickup-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="05xxxxxxxx" data-i18n-placeholder="pickup.phonePh">
-              <p class="field-hint" data-i18n="pickup.phoneHint">رقم سعودي يبدأ بـ 05 أو +9665</p>
-              <p class="field-error" id="err-phone" hidden></p>
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="pickup-city" data-i18n="pickup.city">المدينة</label>
-              <select id="pickup-city" name="city" required>
-                <option value="" data-i18n="pickup.cityPh">اختر المدينة</option>
-                <option value="riyadh" data-i18n="city.riyadh">الرياض</option>
-                <option value="jeddah" data-i18n="city.jeddah">جدة</option>
-                <option value="dammam" data-i18n="city.dammam">الدمام</option>
-                <option value="makkah" data-i18n="city.makkah">مكة</option>
-                <option value="madinah" data-i18n="city.madinah">المدينة</option>
-                <option value="abha" data-i18n="city.abha">أبها</option>
-                <option value="tabuk" data-i18n="city.tabuk">تبوك</option>
-              </select>
-              <p class="field-error" id="err-city" hidden></p>
-            </div>
-            <div class="field">
-              <label for="pickup-date" data-i18n="pickup.date">التاريخ</label>
-              <input id="pickup-date" name="date" type="date" required>
-              <p class="field-error" id="err-date" hidden></p>
-            </div>
-          </div>
-          <div class="field">
-            <label for="pickup-window" data-i18n="pickup.window">نافذة الوقت</label>
-            <select id="pickup-window" name="window" required>
-              <option value="" data-i18n="pickup.windowPh">اختر النافذة</option>
-              <option value="morning" data-i18n="pickup.w1">صباحًا 08:00–12:00</option>
-              <option value="afternoon" data-i18n="pickup.w2">ظهرًا 12:00–16:00</option>
-              <option value="evening" data-i18n="pickup.w3">مساءً 16:00–20:00</option>
-            </select>
-            <p class="field-error" id="err-window" hidden></p>
-          </div>
-          <div class="field">
-            <label for="pickup-notes" data-i18n="pickup.notes">ملاحظات الشحنة</label>
-            <textarea id="pickup-notes" name="notes" rows="4" maxlength="300" data-i18n-placeholder="pickup.notesPh" placeholder="عدد الطرود، محتويات حسّاسة، تعليمات البوابة…"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            <span data-i18n="pickup.submit">تأكيد جدولة الاستلام</span>
-          </button>
-        </form>
-
-        <div class="panel pickup-success" id="pickup-success" hidden>
-          <p class="success-kicker" data-i18n="pickup.successKicker">تم تسجيل الطلب</p>
-          <h2 data-i18n="pickup.successTitle">استلامك مجدول</h2>
-          <p class="lead-sm" data-i18n="pickup.successBody">سنؤكد النافذة عبر واتساب. احتفظ برقم المرجع عند التواصل معنا.</p>
-          <p class="ref-label" data-i18n="pickup.ref">رقم المرجع</p>
-          <p class="ref-number" id="pickup-ref">FS-0000</p>
-          <button type="button" class="btn btn-ghost" id="pickup-reset">
-            <span data-i18n="pickup.another">جدولة شحنة أخرى</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="view" id="view-about" data-view-panel="about">
-      <div class="page-hero">
-        <div class="container">
-          <p class="section-kicker" data-i18n="about.kicker">الشركة</p>
-          <h1 data-i18n="about.title">نبني شبكة شحن تثق بها الأعمال السعودية</h1>
-        </div>
-      </div>
-      <div class="container about-layout">
-        <div class="about-prose">
-          <p data-i18n="about.p1">فالكون شيب شركة لوجستيات مقرها الرياض، متخصصة في الشحن من الباب إلى الباب داخل المملكة وإلى أهم الأسواق العالمية.</p>
-          <p data-i18n="about.p2">نعمل بوصفنا طبقة تنسيق فوق شبكات البريد السعودي وأرامكس وDHL وFedEx: نستلم من بابك، نختار المسار الأنسب، ونسلّم مع تتبع واضح حتى الاستلام.</p>
-          <p data-i18n="about.p3">الرياض مركز التوزيع الطبيعي للمملكة — ومنها نصل جدة والدمام والجنوب والشمال خلال أيام معدودة، ونربط الشحنات الدولية جوًا خلال أسبوع.</p>
-        </div>
-        <aside class="about-aside">
-          <article class="panel">
-            <h2 data-i18n="about.hq">المقر</h2>
-            <p data-i18n="about.hqCity">الرياض، المملكة العربية السعودية</p>
-            <p class="muted" data-i18n="about.hoursVal">الأحد–الخميس · 09:00–18:00</p>
-          </article>
-          <article class="panel">
-            <h2 data-i18n="about.support">دعم واتساب أولاً</h2>
-            <p data-i18n="about.supportBody">عملاؤنا يفضّلون الرد السريع على المكالمات الطويلة. راسل العمليات مباشرة.</p>
-            <p><a href="https://wa.me/966112345678" dir="ltr">+966 11 234 5678</a></p>
-            <p><a href="mailto:hello@falconship.sa">hello@falconship.sa</a></p>
-          </article>
-        </aside>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <a class="logo" href="#home" data-nav="home">
-          <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true">
-            <path fill="currentColor" d="M3 22.5C6.5 12 15 5.5 24 4.5L31.5 3.2C30 8.5 29.5 12 30 15.5C33.5 14.5 36.5 12.5 39 10C37.5 15.5 36.8 18.5 37 21.5C37.2 24.5 38.5 27.5 40 30C35.5 30 32 29 29 27.2L27.2 34L22 29.2C16.5 30.2 10 29.5 3 22.5Z"/>
-          </svg>
-          <span class="logo-word">Falcon<span>Ship</span></span>
+        <a class="addon-tile pickup" href="calculator.html?pickup=1">
+          <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></span>
+          <h3 data-i18n="addon_pickup_h">استلام من الباب</h3>
+          <p data-i18n="addon_pickup_p">نستلم الطرد من عنوان المرسل في الموعد الذي تختاره.</p>
+          <b data-from="pickup">من 41.40 ر.س</b>
         </a>
-        <p data-i18n="footer.tag">شريكك للشحن من الباب إلى الباب</p>
-      </div>
-      <div>
-        <h2 data-i18n="footer.services">الخدمات</h2>
-        <ul>
-          <li><a href="#calculator" data-nav="calculator" data-i18n="nav.calc">حاسبة السعر</a></li>
-          <li><a href="#pickup" data-nav="pickup" data-i18n="nav.pickup">جدولة استلام</a></li>
-          <li><span data-i18n="split.domTitle">شحن محلي من الباب إلى الباب</span></li>
-          <li><span data-i18n="footer.int">شحن جوي دولي</span></li>
-        </ul>
-      </div>
-      <div>
-        <h2 data-i18n="footer.company">الشركة</h2>
-        <ul>
-          <li><a href="#home" data-nav="home" data-i18n="nav.home">الرئيسية</a></li>
-          <li><a href="#about" data-nav="about" data-i18n="nav.about">عن الشركة</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2 data-i18n="footer.contact">تواصل</h2>
-        <ul>
-          <li><a href="https://wa.me/966112345678" dir="ltr">+966 11 234 5678</a></li>
-          <li><a href="mailto:hello@falconship.sa">hello@falconship.sa</a></li>
-          <li data-i18n="about.hqCity">الرياض، المملكة العربية السعودية</li>
-        </ul>
+        <a class="addon-tile pack" href="calculator.html?pack=1">
+          <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/><path d="M7.5 5l9 4"/></svg></span>
+          <h3 data-i18n="addon_pack_h">تغليف احترافي</h3>
+          <p data-i18n="addon_pack_p">كرتون وحماية داخلية مناسبة لحجم الشحنة.</p>
+          <b data-from="pack">من 17.25 ر.س</b>
+        </a>
+        <a class="addon-tile fragile" href="calculator.html?fragile=1">
+          <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 3h10l-1 7a4 4 0 0 1-8 0L7 3Z"/><path d="M12 14v7M8 21h8"/></svg></span>
+          <h3 data-i18n="addon_fragile_h">مناولة القابل للكسر</h3>
+          <p data-i18n="addon_fragile_p">ملصق تحذير ومعاملة خاصة في كل مراحل النقل.</p>
+          <b data-from="fragile">من 11.50 ر.س</b>
+        </a>
       </div>
     </div>
-    <div class="container footer-bottom">
-      <p data-i18n="footer.copy">© 2026 FalconShip Logistics. الرياض.</p>
-    </div>
-  </footer>
+  </section>
 
-  <script src="app.js"></script>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="how_kicker">طريقة الطلب</span>
+        <h2 data-i18n="how_h2">أربع خطوات وطلبك عندنا</h2>
+      </div>
+      <div class="steps">
+        <article class="step"><i>1</i><h3 data-i18n="how1_h">اختر الخدمة</h3><p data-i18n="how1_p">جاف، مبرّد، دولي، أو السودان.</p></article>
+        <article class="step"><i>2</i><h3 data-i18n="how2_h">اكتب البيانات</h3><p data-i18n="how2_p">الوزن والوجهة وبيانات المرسل والمستلم.</p></article>
+        <article class="step"><i>3</i><h3 data-i18n="how3_h">راجع السعر</h3><p data-i18n="how3_p">تفصيل كامل قبل الضريبة وبعدها.</p></article>
+        <article class="step"><i>4</i><h3 data-i18n="how4_h">أرسل على واتساب</h3><p data-i18n="how4_p">يصلنا الطلب بكل خياراتك ونؤكده معك.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="why_kicker">لماذا Track System</span>
+        <h2 data-i18n="why_h2">شحن واضح من أول رسالة</h2>
+      </div>
+      <div class="why-grid">
+        <article class="why"><h3 data-i18n="why1_h">سعر قبل الإرسال</h3><p data-i18n="why1_p">ترى الوزن والإضافات والضريبة قبل أن تطلب.</p></article>
+        <article class="why"><h3 data-i18n="why2_h">تبريد بدرجة تحددها</h3><p data-i18n="why2_p">من التبريد العادي حتى التجميد العميق.</p></article>
+        <article class="why"><h3 data-i18n="why3_h">السودان خدمة مستقلة</h3><p data-i18n="why3_p">مدن السودان لها صفحة وأسعار خاصة.</p></article>
+        <article class="why"><h3 data-i18n="why4_h">رد مباشر</h3><p data-i18n="why4_p">طلبك يصل إلى فريقنا على واتساب، لا إلى نموذج منسي.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0" id="rates">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="kicker" data-i18n="price_kicker">الأسعار</span>
+        <h2 data-i18n="price_h2">التعرفة</h2>
+        <p data-i18n="price_p">السعر الأساسي يشمل حتى 5 كجم. بعدها يُحتسب كل كيلوغرام بدأ.</p>
+      </div>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" class="tab-btn active" aria-selected="true" data-rate-tab="local" data-i18n="tab_local">جاف</button>
+        <button type="button" role="tab" class="tab-btn" aria-selected="false" data-rate-tab="cold" data-i18n="tab_cold">مبرّد</button>
+        <button type="button" role="tab" class="tab-btn" aria-selected="false" data-rate-tab="intl" data-i18n="tab_intl">دولي</button>
+        <button type="button" role="tab" class="tab-btn" aria-selected="false" data-rate-tab="sudan" data-i18n="tab_sudan">السودان</button>
+        <button type="button" role="tab" class="tab-btn" aria-selected="false" data-rate-tab="extra" data-i18n="tab_extra">خدمات مقدمة</button>
+      </div>
+      <div id="rateMount"></div>
+      <p class="price-note" data-i18n="price_note">عمود «شامل الضريبة» هو أقل سعر بعد إضافة 15٪. الخدمات المقدمة تُضاف عند اختيارها.</p>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="cta-band">
+      <div>
+        <h2 data-i18n="cta_h2">جاهز ترسل شحنتك؟</h2>
+        <p data-i18n="cta_p">اختر الخدمة، وخلال دقيقة يصلنا طلبك على واتساب.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="calculator.html" data-i18n="cta_btn">ابدأ الطلب</a>
+        <a class="btn btn-wa" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" data-i18n="hero_cta2">تحدث معنا على واتساب</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <span class="brand-en">Track <i>System</i></span>
+      <p data-i18n="foot_about">Track System علامة شركة تراك سيستمز للخدمات اللوجستية. شحن من الباب إلى الباب داخل المملكة وإلى الخارج.</p>
+      <div class="social-row">
+        <a data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
+        <a href="https://x.com/tracksystems56" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.3L5.3 21H2.2l7.2-8.3L2 3h6.3l4.4 5.8L17.8 3Zm-1.1 16.2h1.7L7.4 4.7H5.6l11.1 14.5Z"/></svg></a>
+        <a href="https://www.facebook.com/profile.php?id=61594882976986" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.6c0-.8.5-1.1 1-1.1h2.4V2h-3.3C10.6 2 10 4.5 10 6.1v2.4H7.6V12H10v10h4V12h2.9l.4-3.5H14Z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h3 data-i18n="foot_links">الصفحات</h3>
+      <ul>
+        <li><a href="index.html" data-i18n="nav_home">الرئيسية</a></li>
+        <li><a href="calculator.html" data-i18n="nav_order">اطلب شحن</a></li>
+        <li><a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a></li>
+        <li><a href="contact.html" data-i18n="nav_contact">تواصل معنا</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 data-i18n="foot_services">الخدمات</h3>
+      <ul>
+        <li><a href="calculator.html?service=dry" data-i18n="svc1_h">شحن جاف محلي</a></li>
+        <li><a href="calculator.html?service=cold" data-i18n="svc2_h">شحن مبرّد</a></li>
+        <li><a href="calculator.html?service=intl" data-i18n="svc3_h">شحن دولي</a></li>
+        <li><a href="calculator.html?service=sudan" data-i18n="svc4_h">الشحن إلى السودان</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 data-i18n="foot_company">الشركة</h3>
+      <ul>
+        <li data-i18n="foot_addr">حي الدريهمية، شارع صيدا، مبنى 7036، الرياض 12796</li>
+        <li><span data-i18n="foot_short">العنوان الوطني</span>: <span class="latin">RBDA7036</span></li>
+        <li><span data-i18n="foot_cr">السجل التجاري</span>: <span class="latin">7055013747</span></li>
+        <li><span data-i18n="foot_vat">الرقم الضريبي</span>: <span class="latin">314968452300003</span></li>
+        <li><a class="latin" dir="ltr" href="tel:+966597281619">+966 59 728 1619</a></li>
+        <li><a class="latin" href="mailto:info@tracksystems.com.sa">info@tracksystems.com.sa</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span><a class="latin" href="https://stor.tracksystems.com.sa/">stor.tracksystems.com.sa</a></div>
+</footer>
+
+<a class="wa-float" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
+
+<script src="i18n.js"></script>
+<script src="calculator.js"></script>
 </body>
 </html>

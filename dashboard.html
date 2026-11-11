@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة تحكم تراك سستم | Aramex</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0A1830;--card:#111f38;--border:#1e3050;--text:#e0e8f0;--muted:#7a8da0;--red:#E3141B;--green:#22c55e;--yellow:#f59e0b;--blue:#3b82f6}
+body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar h1{font-size:1.1rem;display:flex;align-items:center;gap:8px}
+.topbar h1 span{color:var(--red)}
+.topbar .acc{font-size:.82rem;color:var(--muted);display:flex;gap:16px}
+.topbar .acc b{color:var(--text)}
+
+.wrap{max-width:1200px;margin:0 auto;padding:20px}
+
+/* Quick Actions */
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:28px}
+.act{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.2s;text-decoration:none;color:var(--text)}
+.act:hover{border-color:var(--red);transform:translateY(-2px);text-decoration:none}
+.act .icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.act .icon.red{background:#E3141B22} .act .icon.blue{background:#3b82f622} .act .icon.green{background:#22c55e22} .act .icon.yellow{background:#f59e0b22} .act .icon.purple{background:#a855f722}
+.act h3{font-size:.95rem;margin-bottom:2px}
+.act p{font-size:.78rem;color:var(--muted);line-height:1.3}
+
+/* Sections */
+.section{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+.section h2{font-size:1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section h2 .badge{background:var(--red);color:#fff;font-size:.72rem;padding:2px 8px;border-radius:10px}
+
+/* Order Form */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid.three{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:.82rem;color:var(--muted)}
+.field input,.field select,.field textarea{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font:inherit;font-size:.9rem}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--blue)}
+.field.full{grid-column:1/-1}
+
+.btn{padding:10px 20px;border:none;border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.9}
+.btn-blue{background:var(--blue);color:#fff}.btn-blue:hover{opacity:.9}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{opacity:.9}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text)}.btn-ghost:hover{border-color:var(--muted)}
+.btn-sm{padding:6px 14px;font-size:.82rem}
+
+.btn-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+
+/* Orders Table */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{text-align:right;padding:10px 12px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:.8rem;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover{background:#ffffff06}
+.status{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:600}
+.status.new{background:#3b82f622;color:var(--blue)}
+.status.shipped{background:#22c55e22;color:var(--green)}
+.status.pending{background:#f59e0b22;color:var(--yellow)}
+.status.delivered{background:#a855f722;color:#a855f7}
+.awb-link{font-family:monospace;font-size:.85rem;color:var(--blue)}
+.copy-btn{background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 8px;font-size:.75rem;cursor:pointer}
+.copy-btn:hover{color:var(--text);border-color:var(--muted)}
+
+/* Tabs */
+.tabs{display:flex;gap:6px;margin-bottom:16px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.tabs button{background:none;border:none;color:var(--muted);font:inherit;font-size:.88rem;padding:8px 16px;border-radius:8px 8px 0 0;cursor:pointer}
+.tabs button.active{color:var(--text);background:var(--bg)}
+
+/* Toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--green);color:#fff;padding:10px 24px;border-radius:10px;font-size:.9rem;opacity:0;transition:.3s;z-index:999;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Empty state */
+.empty{text-align:center;padding:40px;color:var(--muted)}
+
+/* Responsive */
+@media(max-width:700px){.form-grid,.form-grid.three{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🚚 <span>Track</span> System <small style="color:var(--muted);font-weight:400;font-size:.8rem">× Aramex</small></h1>
+  <div class="acc">
+    <span>حساب: <b>75821264</b></span>
+    <span>فرع: <b>RUH</b></span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- Quick Actions -->
+  <div class="actions">
+    <a class="act" onclick="botLogin()" style="cursor:pointer" id="loginBtn">
+      <div class="icon yellow">🔐</div>
+      <div><h3>تسجيل دخول أرامكس</h3><p id="botStatus">اضغط لفتح المتصفح وتسجيل الدخول</p></div>
+    </a>
+    <a class="act" href="https://www.aramex.com/sa/en/ship" target="_blank" rel="noopener">
+      <div class="icon red">📦</div>
+      <div><h3>إنشاء شحنة</h3><p>افتح صفحة الشحن على أرامكس</p></div>
+    </a>
+    <a class="act" href="https://www.aramex.com/sa/en/track/results" target="_blank" rel="noopener">
+      <div class="icon blue">🔍</div>
+      <div><h3>تتبع شحنة</h3><p>تتبع بوليصة على موقع أرامكس</p></div>
+    </a>
+    <a class="act" href="https://www.aramex.com/sa/en/schedule-pickup" target="_blank" rel="noopener">
+      <div class="icon green">🚛</div>
+      <div><h3>طلب مندوب</h3><p>جدول استلام من موقعك</p></div>
+    </a>
+    <a class="act" onclick="document.getElementById('newOrderSection').scrollIntoView({behavior:'smooth'})" style="cursor:pointer">
+      <div class="icon purple">➕</div>
+      <div><h3>طلب جديد</h3><p>سجّل طلب من العميل</p></div>
+    </a>
+  </div>
+
+  <!-- New Order -->
+  <div class="section" id="newOrderSection">
+    <h2>➕ تسجيل طلب جديد</h2>
+    <form id="orderForm">
+      <div class="form-grid">
+        <div class="field"><label>رقم الطلب (TS)</label><input id="orderId" readonly></div>
+        <div class="field"><label>نوع الخدمة</label>
+          <select id="svcType"><option value="dry">شحن جاف محلي</option><option value="cold">شحن مبرّد</option><option value="intl">شحن دولي</option><option value="sudan">الشحن إلى السودان</option></select>
+        </div>
+      </div>
+      <h3 style="margin:18px 0 10px;font-size:.9rem;color:var(--muted)">— المرسل —</h3>
+      <div class="form-grid">
+        <div class="field"><label>اسم المرسل</label><input id="sName" placeholder="الاسم الكامل"></div>
+        <div class="field"><label>جوال المرسل</label><input id="sPhone" dir="ltr" placeholder="05XXXXXXXX"></div>
+        <div class="field"><label>مدينة المرسل</label><input id="sCity" placeholder="الرياض"></div>
+        <div class="field"><label>عنوان المرسل</label><input id="sAddr" placeholder="الحي، الشارع، المبنى"></div>
+      </div>
+      <h3 style="margin:18px 0 10px;font-size:.9rem;color:var(--muted)">— المستلم —</h3>
+      <div class="form-grid">
+        <div class="field"><label>اسم المستلم</label><input id="rName" placeholder="الاسم الكامل"></div>
+        <div class="field"><label>جوال المستلم</label><input id="rPhone" dir="ltr" placeholder="05XXXXXXXX"></div>
+        <div class="field"><label>مدينة المستلم</label><input id="rCity" placeholder="جدة"></div>
+        <div class="field"><label>عنوان المستلم</label><input id="rAddr" placeholder="الحي، الشارع، المبنى"></div>
+      </div>
+      <h3 style="margin:18px 0 10px;font-size:.9rem;color:var(--muted)">— تفاصيل الشحنة —</h3>
+      <div class="form-grid three">
+        <div class="field"><label>الوزن (كجم)</label><input id="weight" type="number" min="0.1" step="0.1" placeholder="5"></div>
+        <div class="field"><label>عدد الطرود</label><input id="pieces" type="number" min="1" value="1"></div>
+        <div class="field"><label>المحتويات</label><input id="contents" placeholder="وصف المحتويات"></div>
+      </div>
+      <div class="form-grid three" style="margin-top:10px">
+        <div class="field"><label>الطول (سم)</label><input id="dimL" type="number" placeholder="—"></div>
+        <div class="field"><label>العرض (سم)</label><input id="dimW" type="number" placeholder="—"></div>
+        <div class="field"><label>الارتفاع (سم)</label><input id="dimH" type="number" placeholder="—"></div>
+      </div>
+      <div class="field full" style="margin-top:10px"><label>ملاحظات</label><textarea id="notes" rows="2" placeholder="ملاحظات إضافية..."></textarea></div>
+
+      <div class="btn-row">
+        <button type="submit" class="btn btn-red">💾 حفظ الطلب</button>
+        <button type="button" class="btn btn-green" onclick="botShipOrder()">🤖 إنشاء على أرامكس تلقائي</button>
+        <button type="button" class="btn btn-blue" onclick="copyForAramex()">📋 نسخ للإدخال اليدوي</button>
+        <button type="button" class="btn btn-ghost" onclick="clearForm()">🗑️ مسح</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Orders List -->
+  <div class="section">
+    <h2>📋 الطلبات <span class="badge" id="orderCount">0</span></h2>
+    <div class="tabs">
+      <button class="active" onclick="filterOrders('all',this)">الكل</button>
+      <button onclick="filterOrders('new',this)">جديد</button>
+      <button onclick="filterOrders('shipped',this)">تم الشحن</button>
+      <button onclick="filterOrders('delivered',this)">تم التسليم</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>رقم الطلب</th><th>المرسل</th><th>المستلم</th><th>الوجهة</th><th>الوزن</th><th>الحالة</th><th>AWB</th><th>إجراءات</th></tr></thead>
+        <tbody id="ordersBody"><tr><td colspan="8" class="empty">لا توجد طلبات بعد. سجّل أول طلب ☝️</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Quick Track -->
+  <div class="section">
+    <h2>🔍 تتبع سريع</h2>
+    <div style="display:flex;gap:10px">
+      <input class="field" id="quickTrackInput" dir="ltr" placeholder="رقم بوليصة أرامكس (AWB)" style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:.9rem">
+      <button class="btn btn-blue" onclick="quickTrack()">تتبع ←</button>
+    </div>
+  </div>
+
+  <!-- Aramex City Codes Reference -->
+  <div class="section">
+    <h2>📍 رموز المدن السعودية (أرامكس)</h2>
+    <div class="table-wrap">
+      <table id="citiesTable">
+        <thead><tr><th>الرمز</th><th>المدينة</th><th>نسخ</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// === Cities ===
+const CITIES = [
+  ["RUH","الرياض"],["JED","جدة"],["MEC","مكة المكرمة"],["MED","المدينة المنورة"],["TIF","الطائف"],
+  ["DMM","الدمام"],["KHO","الخبر"],["DHA","الظهران"],["HOF","الهفوف"],["QAT","القطيف"],
+  ["JUB","الجبيل"],["YNB","ينبع"],["BRD","بريدة"],["UNZ","عنيزة"],["HAS","حائل"],
+  ["TUU","تبوك"],["AHB","أبها"],["KMX","خميس مشيط"],["GIZ","جازان"],["EAM","نجران"],
+  ["BHH","الباحة"],["AJF","سكاكا"],["RAE","عرعر"],["HBT","حفر الباطن"],["URY","القريات"],
+  ["AKJ","الخرج"],["WAE","وادي الدواسر"],["ULH","العلا"],["BSH","بيشة"],["ABQ","أبقيق"]
+];
+
+// Fill cities table
+const citiesTbody = document.querySelector('#citiesTable tbody');
+CITIES.forEach(([code, name]) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><code style="background:var(--bg);padding:3px 8px;border-radius:4px">${code}</code></td><td>${name}</td><td><button class="copy-btn" onclick="copyText('${code}')">نسخ</button></td>`;
+  citiesTbody.appendChild(tr);
+});
+
+// === Order ID Generator ===
+function genOrderId() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `TS-${pad(d.getFullYear() % 100)}${pad(d.getMonth()+1)}${pad(d.getDate())}-${rand}`;
+}
+document.getElementById('orderId').value = genOrderId();
+
+// === Local Storage ===
+function getOrders() { try { return JSON.parse(localStorage.getItem('ts_orders') || '[]'); } catch { return []; } }
+function saveOrders(orders) { localStorage.setItem('ts_orders', JSON.stringify(orders)); }
+
+// === Render Orders ===
+let currentFilter = 'all';
+function renderOrders() {
+  const orders = getOrders();
+  const filtered = currentFilter === 'all' ? orders : orders.filter(o => o.status === currentFilter);
+  document.getElementById('orderCount').textContent = orders.length;
+  const tbody = document.getElementById('ordersBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" class="empty">لا توجد طلبات</td></tr>';
+    return;
+  }
+  tbody.innerHTML = filtered.map((o, idx) => {
+    const realIdx = orders.indexOf(o);
+    const statusMap = { 'new': 'جديد', 'shipped': 'تم الشحن', 'pending': 'بانتظار الاستلام', 'delivered': 'تم التسليم' };
+    return `<tr>
+      <td><code>${esc(o.id)}</code></td>
+      <td>${esc(o.sName)}<br><small style="color:var(--muted)">${esc(o.sPhone)}</small></td>
+      <td>${esc(o.rName)}<br><small style="color:var(--muted)">${esc(o.rPhone)}</small></td>
+      <td>${esc(o.rCity)}</td>
+      <td>${esc(o.weight)} كجم</td>
+      <td><span class="status ${o.status}">${statusMap[o.status] || o.status}</span></td>
+      <td>${o.awb ? '<a class="awb-link" href="https://www.aramex.com/sa/en/track/results?ShipmentNumber='+encodeURIComponent(o.awb)+'" target="_blank">'+esc(o.awb)+'</a>' : '<button class="copy-btn" onclick="addAwb('+realIdx+')">+ AWB</button>'}</td>
+      <td>
+        <button class="copy-btn" onclick="copyOrderForAramex(${realIdx})" title="نسخ للإدخال">📋</button>
+        <button class="copy-btn" onclick="cycleStatus(${realIdx})" title="تغيير الحالة">🔄</button>
+        <button class="copy-btn" onclick="deleteOrder(${realIdx})" title="حذف">🗑️</button>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function filterOrders(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderOrders();
+}
+
+// === Order Actions ===
+document.getElementById('orderForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const order = {
+    id: document.getElementById('orderId').value,
+    svcType: document.getElementById('svcType').value,
+    sName: document.getElementById('sName').value,
+    sPhone: document.getElementById('sPhone').value,
+    sCity: document.getElementById('sCity').value,
+    sAddr: document.getElementById('sAddr').value,
+    rName: document.getElementById('rName').value,
+    rPhone: document.getElementById('rPhone').value,
+    rCity: document.getElementById('rCity').value,
+    rAddr: document.getElementById('rAddr').value,
+    weight: document.getElementById('weight').value,
+    pieces: document.getElementById('pieces').value,
+    contents: document.getElementById('contents').value,
+    dimL: document.getElementById('dimL').value,
+    dimW: document.getElementById('dimW').value,
+    dimH: document.getElementById('dimH').value,
+    notes: document.getElementById('notes').value,
+    status: 'new',
+    awb: '',
+    created: new Date().toISOString(),
+  };
+  if (!order.sName || !order.rName || !order.weight) { toast('أكمل البيانات المطلوبة'); return; }
+  const orders = getOrders();
+  orders.unshift(order);
+  saveOrders(orders);
+  renderOrders();
+  clearForm();
+  toast('تم حفظ الطلب ✅');
+});
+
+function clearForm() {
+  document.getElementById('orderForm').reset();
+  document.getElementById('orderId').value = genOrderId();
+}
+
+function addAwb(idx) {
+  const awb = prompt('أدخل رقم بوليصة أرامكس (AWB):');
+  if (!awb) return;
+  const orders = getOrders();
+  orders[idx].awb = awb.trim();
+  orders[idx].status = 'shipped';
+  saveOrders(orders);
+  renderOrders();
+  toast('تم إضافة AWB ✅');
+}
+
+function cycleStatus(idx) {
+  const cycle = ['new', 'pending', 'shipped', 'delivered'];
+  const orders = getOrders();
+  const cur = cycle.indexOf(orders[idx].status);
+  orders[idx].status = cycle[(cur + 1) % cycle.length];
+  saveOrders(orders);
+  renderOrders();
+}
+
+function deleteOrder(idx) {
+  if (!confirm('حذف هذا الطلب؟')) return;
+  const orders = getOrders();
+  orders.splice(idx, 1);
+  saveOrders(orders);
+  renderOrders();
+  toast('تم الحذف');
+}
+
+// === Copy for Aramex ===
+function copyForAramex() {
+  const text = buildAramexText({
+    sName: document.getElementById('sName').value,
+    sPhone: document.getElementById('sPhone').value,
+    sCity: document.getElementById('sCity').value,
+    sAddr: document.getElementById('sAddr').value,
+    rName: document.getElementById('rName').value,
+    rPhone: document.getElementById('rPhone').value,
+    rCity: document.getElementById('rCity').value,
+    rAddr: document.getElementById('rAddr').value,
+    weight: document.getElementById('weight').value,
+    pieces: document.getElementById('pieces').value,
+    contents: document.getElementById('contents').value,
+  });
+  navigator.clipboard.writeText(text).then(() => toast('تم النسخ — الصقها في أرامكس 📋'));
+}
+
+function copyOrderForAramex(idx) {
+  const o = getOrders()[idx];
+  const text = buildAramexText(o);
+  navigator.clipboard.writeText(text).then(() => toast('تم النسخ 📋'));
+}
+
+function buildAramexText(o) {
+  return [
+    '=== بيانات الشحنة ===',
+    'المرسل: ' + (o.sName || ''),
+    'جوال المرسل: ' + (o.sPhone || ''),
+    'مدينة المرسل: ' + (o.sCity || ''),
+    'عنوان المرسل: ' + (o.sAddr || ''),
+    '',
+    'المستلم: ' + (o.rName || ''),
+    'جوال المستلم: ' + (o.rPhone || ''),
+    'مدينة المستلم: ' + (o.rCity || ''),
+    'عنوان المستلم: ' + (o.rAddr || ''),
+    '',
+    'الوزن: ' + (o.weight || '') + ' كجم',
+    'عدد الطرود: ' + (o.pieces || '1'),
+    'المحتويات: ' + (o.contents || ''),
+  ].join('\n');
+}
+
+// === Quick Track ===
+function quickTrack() {
+  const awb = document.getElementById('quickTrackInput').value.trim();
+  if (!awb) { toast('أدخل رقم البوليصة'); return; }
+  window.open('https://www.aramex.com/sa/en/track/results?ShipmentNumber=' + encodeURIComponent(awb), '_blank');
+}
+document.getElementById('quickTrackInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') quickTrack();
+});
+
+// === Utils ===
+function esc(s) { return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c])); }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(() => t.classList.remove('show'), 2500);
+}
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => toast('تم النسخ: ' + text));
+}
+
+// === Bot Automation ===
+const BOT_API = 'http://localhost:3001/api/bot';
+
+async function botLogin() {
+  document.getElementById('botStatus').textContent = 'جاري فتح المتصفح...';
+  try {
+    const res = await fetch(BOT_API + '/login', { method: 'POST' });
+    const data = await res.json();
+    document.getElementById('botStatus').textContent = data.ok ? '✅ متصل بأرامكس' : '❌ ' + (data.error || 'فشل');
+    toast(data.message || data.error);
+  } catch(err) {
+    document.getElementById('botStatus').textContent = '❌ السيرفر مو شغّال';
+    toast('شغّل السيرفر أولاً: cd server && npm start');
+  }
+}
+
+async function botShipOrder() {
+  const order = {
+    id: document.getElementById('orderId').value,
+    sName: document.getElementById('sName').value,
+    sPhone: document.getElementById('sPhone').value,
+    sCity: document.getElementById('sCity').value,
+    sAddr: document.getElementById('sAddr').value,
+    rName: document.getElementById('rName').value,
+    rPhone: document.getElementById('rPhone').value,
+    rCity: document.getElementById('rCity').value,
+    rAddr: document.getElementById('rAddr').value,
+    weight: document.getElementById('weight').value,
+    pieces: document.getElementById('pieces').value,
+    contents: document.getElementById('contents').value,
+  };
+  if (!order.sName || !order.rName || !order.weight) { toast('أكمل البيانات أولاً'); return; }
+  toast('🤖 جاري إنشاء الشحنة على أرامكس...');
+  try {
+    const res = await fetch(BOT_API + '/ship', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+    const data = await res.json();
+    toast(data.ok ? '✅ تم تعبئة الفورم — راجع المتصفح واضغط Submit' : '❌ ' + (data.error || 'خطأ'));
+  } catch(err) {
+    toast('❌ شغّل السيرفر أولاً: cd server && npm start');
+  }
+}
+
+async function checkBotStatus() {
+  try {
+    const res = await fetch(BOT_API + '/status');
+    const data = await res.json();
+    if (data.loggedIn) document.getElementById('botStatus').textContent = '✅ متصل بأرامكس';
+  } catch {}
+}
+checkBotStatus();
+
+// Init
+renderOrders();
+</script>
+</body>
+</html>

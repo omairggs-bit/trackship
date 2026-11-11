@@ -1,18 +1,17 @@
-/* Track Ship pricing
-   Net rates were raised above the previous tariff so the retained
-   revenue is higher. VAT is 15% because Track Systems Company is
+/* Track System pricing and WhatsApp ordering
+   Net rates are before VAT. VAT is 15% because Track Systems Company is
    registered (314968452300003) with effect from 1 September 2026.
    Extra kilograms are billed per started kilogram. */
-
-const TRACKSHIP_STORE = "https://stor.tracksystems.com.sa/";
-const TRACKSHIP_CART_KEY = "trackship_cart_v1";
 
 const TS_RATES = {
   vat: 0.15,
   minBillable: 0.5,
+  maxKg: 300,
   insuranceRate: 0.02,
   insuranceMin: 8,
   pickup: 36,
+  pack: 15,
+  fragile: 10,
   express: { dry: 15, cold: 22, intl: 35, sudan: 45 },
   temp: { chill: 0, cool: 10, freeze: 22, deep: 36 },
   dry: {
@@ -42,179 +41,125 @@ const TS_RATES = {
 
 const TS_ETA = {
   dry: {
-    same: { ar: "خلال 24 ساعة", en: "Within 24 hours", ur: "24 گھنٹوں کے اندر" },
-    between: { ar: "1–3 أيام", en: "1–3 days", ur: "1–3 دن" },
-    sameFast: { ar: "خلال ساعات اليوم", en: "Within a few hours today", ur: "آج چند گھنٹوں میں" },
-    betweenFast: { ar: "اليوم التالي", en: "Next day", ur: "اگلا دن" },
+    same: ["خلال 24 ساعة", "Within 24 hours"],
+    between: ["1–3 أيام", "1–3 days"],
+    sameFast: ["خلال ساعات اليوم", "Within a few hours today"],
+    betweenFast: ["اليوم التالي", "Next day"],
   },
   cold: {
-    same: { ar: "12–24 ساعة", en: "12–24 hours", ur: "12–24 گھنٹے" },
-    between: { ar: "1–2 أيام", en: "1–2 days", ur: "1–2 دن" },
-    sameFast: { ar: "خلال 12 ساعة", en: "Within 12 hours", ur: "12 گھنٹوں میں" },
-    betweenFast: { ar: "اليوم التالي", en: "Next day", ur: "اگلا دن" },
+    same: ["12–24 ساعة", "12–24 hours"],
+    between: ["1–2 أيام", "1–2 days"],
+    sameFast: ["خلال 12 ساعة", "Within 12 hours"],
+    betweenFast: ["اليوم التالي", "Next day"],
   },
   intl: {
-    gulf: { ar: "2–4 أيام", en: "2–4 days", ur: "2–4 دن" },
-    mena: { ar: "3–6 أيام", en: "3–6 days", ur: "3–6 دن" },
-    asia: { ar: "4–8 أيام", en: "4–8 days", ur: "4–8 دن" },
-    europe: { ar: "5–9 أيام", en: "5–9 days", ur: "5–9 دن" },
-    americas: { ar: "6–12 يومًا", en: "6–12 days", ur: "6–12 دن" },
-    africa: { ar: "5–10 أيام", en: "5–10 days", ur: "5–10 دن" },
-    oceania: { ar: "7–14 يومًا", en: "7–14 days", ur: "7–14 دن" },
-    other: { ar: "6–14 يومًا", en: "6–14 days", ur: "6–14 دن" },
+    gulf: ["2–4 أيام", "2–4 days"],
+    mena: ["3–6 أيام", "3–6 days"],
+    asia: ["4–8 أيام", "4–8 days"],
+    europe: ["5–9 أيام", "5–9 days"],
+    americas: ["6–12 يومًا", "6–12 days"],
+    africa: ["5–10 أيام", "5–10 days"],
+    oceania: ["7–14 يومًا", "7–14 days"],
+    other: ["6–14 يومًا", "6–14 days"],
   },
   sudan: {
-    capital: { ar: "5–9 أيام", en: "5–9 days", ur: "5–9 دن" },
-    port: { ar: "6–10 أيام", en: "6–10 days", ur: "6–10 دن" },
-    other: { ar: "7–12 يومًا", en: "7–12 days", ur: "7–12 دن" },
+    capital: ["5–9 أيام", "5–9 days"],
+    port: ["6–10 أيام", "6–10 days"],
+    other: ["7–12 يومًا", "7–12 days"],
   },
 };
 
+/* [code, arabic, english] */
 const TS_SA = [
-  ["RUH","الرياض","Riyadh","ریاض"],
-  ["JED","جدة","Jeddah","جدہ"],
-  ["MEC","مكة المكرمة","Makkah","مکہ"],
-  ["MED","المدينة المنورة","Madinah","مدینہ"],
-  ["TIF","الطائف","Taif","طائف"],
-  ["DMM","الدمام","Dammam","دمام"],
-  ["KHO","الخبر","Khobar","خبر"],
-  ["DHA","الظهران","Dhahran","ظہران"],
-  ["HOF","الهفوف","Hofuf","ہفوف"],
-  ["QAT","القطيف","Qatif","قطیف"],
-  ["JUB","الجبيل","Jubail","جبیل"],
-  ["YNB","ينبع","Yanbu","ینبع"],
-  ["BRD","بريدة","Buraydah","بریدہ"],
-  ["UNZ","عنيزة","Unaizah","عنیزہ"],
-  ["HAS","حائل","Hail","حائل"],
-  ["TUU","تبوك","Tabuk","تبوک"],
-  ["AHB","أبها","Abha","ابہا"],
-  ["KMX","خميس مشيط","Khamis Mushait","خمیس مشیط"],
-  ["GIZ","جازان","Jazan","جازان"],
-  ["EAM","نجران","Najran","نجران"],
-  ["BHH","الباحة","Al Baha","باہا"],
-  ["AJF","سكاكا","Sakaka","سکاکا"],
-  ["RAE","عرعر","Arar","عرعر"],
-  ["HBT","حفر الباطن","Hafar Al Batin","حفر الباطن"],
-  ["URY","القريات","Qurayyat","قریات"],
-  ["AKJ","الخرج","Al Kharj","خرج"],
-  ["WAE","وادي الدواسر","Wadi Al Dawasir","وادی الدواسر"],
-  ["ULH","العلا","Al Ula","العلا"],
-  ["BSH","بيشة","Bisha","بیشہ"],
-  ["ABQ","أبقيق","Abqaiq","بقیق"],
+  ["RUH","الرياض","Riyadh"], ["JED","جدة","Jeddah"], ["MEC","مكة المكرمة","Makkah"],
+  ["MED","المدينة المنورة","Madinah"], ["TIF","الطائف","Taif"], ["DMM","الدمام","Dammam"],
+  ["KHO","الخبر","Khobar"], ["DHA","الظهران","Dhahran"], ["HOF","الهفوف","Hofuf"],
+  ["QAT","القطيف","Qatif"], ["JUB","الجبيل","Jubail"], ["YNB","ينبع","Yanbu"],
+  ["BRD","بريدة","Buraydah"], ["UNZ","عنيزة","Unaizah"], ["HAS","حائل","Hail"],
+  ["TUU","تبوك","Tabuk"], ["AHB","أبها","Abha"], ["KMX","خميس مشيط","Khamis Mushait"],
+  ["GIZ","جازان","Jazan"], ["EAM","نجران","Najran"], ["BHH","الباحة","Al Baha"],
+  ["AJF","سكاكا","Sakaka"], ["RAE","عرعر","Arar"], ["HBT","حفر الباطن","Hafar Al Batin"],
+  ["URY","القريات","Qurayyat"], ["AKJ","الخرج","Al Kharj"], ["WAE","وادي الدواسر","Wadi Al Dawasir"],
+  ["ULH","العلا","Al Ula"], ["BSH","بيشة","Bisha"], ["ABQ","أبقيق","Abqaiq"],
 ];
 
+/* [code, tier, arabic, english] */
 const TS_SUDAN = [
-  ["KRT","capital","الخرطوم","Khartoum","خرطوم"],
-  ["OMD","capital","أم درمان","Omdurman","ام درمان"],
-  ["KHB","capital","الخرطوم بحري","Khartoum North","خرطوم بحری"],
-  ["PZU","port","بورتسودان","Port Sudan","پورٹ سوڈان"],
-  ["WMD","other","ود مدني","Wad Madani","ود مدنی"],
-  ["EBD","other","الأبيض","El Obeid","الابیض"],
-  ["KSL","other","كسلا","Kassala","کسلا"],
-  ["GDS","other","القضارف","Gedaref","القضارف"],
-  ["ELF","other","الفاشر","El Fasher","الفاشر"],
-  ["UYL","other","نيالا","Nyala","نیالا"],
-  ["GEN","other","الجنينة","Geneina","الجنینہ"],
-  ["ATB","other","عطبرة","Atbara","عطبرہ"],
-  ["DOG","other","دنقلا","Dongola","دنقلا"],
-  ["KST","other","كوستي","Kosti","کوستی"],
-  ["SNR","other","سنار","Sennar","سنار"],
-  ["DAM","other","الدمازين","Ad Damazin","الدمازین"],
-  ["RBK","other","ربك","Rabak","ربک"],
-  ["SHN","other","شندي","Shendi","شندی"],
-  ["KDX","other","كادوقلي","Kadugli","کادقلی"],
-  ["NHU","other","حلفا الجديدة","New Halfa","حلفا جدید"],
-  ["KRM","other","كريمة","Karima","کریمہ"],
+  ["KRT","capital","الخرطوم","Khartoum"], ["OMD","capital","أم درمان","Omdurman"],
+  ["KHB","capital","الخرطوم بحري","Khartoum North"], ["PZU","port","بورتسودان","Port Sudan"],
+  ["WMD","other","ود مدني","Wad Madani"], ["EBD","other","الأبيض","El Obeid"],
+  ["KSL","other","كسلا","Kassala"], ["GDS","other","القضارف","Gedaref"],
+  ["ELF","other","الفاشر","El Fasher"], ["UYL","other","نيالا","Nyala"],
+  ["GEN","other","الجنينة","Geneina"], ["ATB","other","عطبرة","Atbara"],
+  ["DOG","other","دنقلا","Dongola"], ["KST","other","كوستي","Kosti"],
+  ["SNR","other","سنار","Sennar"], ["DAM","other","الدمازين","Ad Damazin"],
+  ["RBK","other","ربك","Rabak"], ["SHN","other","شندي","Shendi"],
+  ["KDX","other","كادوقلي","Kadugli"], ["NHU","other","حلفا الجديدة","New Halfa"],
+  ["KRM","other","كريمة","Karima"],
 ];
 
+/* [code, zone, arabic, english] */
 const TS_COUNTRIES = [
-  ["AE","gulf","الإمارات","United Arab Emirates","متحدہ عرب امارات"],
-  ["KW","gulf","الكويت","Kuwait","کویت"],
-  ["BH","gulf","البحرين","Bahrain","بحرین"],
-  ["OM","gulf","عُمان","Oman","عمان"],
-  ["QA","gulf","قطر","Qatar","قطر"],
-  ["EG","mena","مصر","Egypt","مصر"],
-  ["JO","mena","الأردن","Jordan","اردن"],
-  ["LB","mena","لبنان","Lebanon","لبنان"],
-  ["IQ","mena","العراق","Iraq","عراق"],
-  ["YE","mena","اليمن","Yemen","یمن"],
-  ["SY","mena","سوريا","Syria","شام"],
-  ["PS","mena","فلسطين","Palestine","فلسطین"],
-  ["TR","mena","تركيا","Turkey","ترکی"],
-  ["MA","mena","المغرب","Morocco","مراکش"],
-  ["TN","mena","تونس","Tunisia","تونس"],
-  ["DZ","mena","الجزائر","Algeria","الجزائر"],
-  ["LY","mena","ليبيا","Libya","لیبیا"],
-  ["IN","asia","الهند","India","بھارت"],
-  ["PK","asia","باكستان","Pakistan","پاکستان"],
-  ["BD","asia","بنغلاديش","Bangladesh","بنگلہ دیش"],
-  ["CN","asia","الصين","China","چین"],
-  ["HK","asia","هونغ كونغ","Hong Kong","ہانگ کانگ"],
-  ["JP","asia","اليابان","Japan","جاپان"],
-  ["KR","asia","كوريا الجنوبية","South Korea","جنوبی کوریا"],
-  ["SG","asia","سنغافورة","Singapore","سنگاپور"],
-  ["MY","asia","ماليزيا","Malaysia","ملائیشیا"],
-  ["ID","asia","إندونيسيا","Indonesia","انڈونیشیا"],
-  ["TH","asia","تايلاند","Thailand","تھائی لینڈ"],
-  ["PH","asia","الفلبين","Philippines","فلپائن"],
-  ["VN","asia","فيتنام","Vietnam","ویتنام"],
-  ["LK","asia","سريلانكا","Sri Lanka","سری لنکا"],
-  ["NP","asia","نيبال","Nepal","نیپال"],
-  ["GB","europe","بريطانيا","United Kingdom","برطانیہ"],
-  ["DE","europe","ألمانيا","Germany","جرمنی"],
-  ["FR","europe","فرنسا","France","فرانس"],
-  ["IT","europe","إيطاليا","Italy","اٹلی"],
-  ["ES","europe","إسبانيا","Spain","سپین"],
-  ["NL","europe","هولندا","Netherlands","نیدرلینڈز"],
-  ["BE","europe","بلجيكا","Belgium","بیلجیم"],
-  ["CH","europe","سويسرا","Switzerland","سوئٹزرلینڈ"],
-  ["AT","europe","النمسا","Austria","آسٹریا"],
-  ["SE","europe","السويد","Sweden","سویڈن"],
-  ["NO","europe","النرويج","Norway","ناروے"],
-  ["DK","europe","الدنمارك","Denmark","ڈنمارک"],
-  ["IE","europe","أيرلندا","Ireland","آئرلینڈ"],
-  ["PL","europe","بولندا","Poland","پولینڈ"],
-  ["GR","europe","اليونان","Greece","یونان"],
-  ["PT","europe","البرتغال","Portugal","پرتگال"],
-  ["US","americas","الولايات المتحدة","United States","ریاستہائے متحدہ"],
-  ["CA","americas","كندا","Canada","کینیڈا"],
-  ["MX","americas","المكسيك","Mexico","میکسیکو"],
-  ["BR","americas","البرازيل","Brazil","برازیل"],
-  ["AR","americas","الأرجنتين","Argentina","ارجنٹائن"],
-  ["AU","oceania","أستراليا","Australia","آسٹریلیا"],
-  ["NZ","oceania","نيوزيلندا","New Zealand","نیوزی لینڈ"],
-  ["ET","africa","إثيوبيا","Ethiopia","ایتھوپیا"],
-  ["KE","africa","كينيا","Kenya","کینیا"],
-  ["NG","africa","نيجيريا","Nigeria","نائجیریا"],
-  ["ZA","africa","جنوب أفريقيا","South Africa","جنوبی افریقہ"],
-  ["GH","africa","غانا","Ghana","گھانا"],
-  ["UG","africa","أوغندا","Uganda","یوگنڈا"],
-  ["TZ","africa","تنزانيا","Tanzania","تنزانیہ"],
-  ["XX","other","دولة أخرى","Other country","کوئی اور ملک"],
+  ["AE","gulf","الإمارات","United Arab Emirates"], ["KW","gulf","الكويت","Kuwait"],
+  ["BH","gulf","البحرين","Bahrain"], ["OM","gulf","عُمان","Oman"], ["QA","gulf","قطر","Qatar"],
+  ["EG","mena","مصر","Egypt"], ["JO","mena","الأردن","Jordan"], ["LB","mena","لبنان","Lebanon"],
+  ["IQ","mena","العراق","Iraq"], ["YE","mena","اليمن","Yemen"], ["SY","mena","سوريا","Syria"],
+  ["PS","mena","فلسطين","Palestine"], ["TR","mena","تركيا","Turkey"], ["MA","mena","المغرب","Morocco"],
+  ["TN","mena","تونس","Tunisia"], ["DZ","mena","الجزائر","Algeria"], ["LY","mena","ليبيا","Libya"],
+  ["IN","asia","الهند","India"], ["PK","asia","باكستان","Pakistan"], ["BD","asia","بنغلاديش","Bangladesh"],
+  ["CN","asia","الصين","China"], ["HK","asia","هونغ كونغ","Hong Kong"], ["JP","asia","اليابان","Japan"],
+  ["KR","asia","كوريا الجنوبية","South Korea"], ["SG","asia","سنغافورة","Singapore"],
+  ["MY","asia","ماليزيا","Malaysia"], ["ID","asia","إندونيسيا","Indonesia"], ["TH","asia","تايلاند","Thailand"],
+  ["PH","asia","الفلبين","Philippines"], ["VN","asia","فيتنام","Vietnam"], ["LK","asia","سريلانكا","Sri Lanka"],
+  ["NP","asia","نيبال","Nepal"],
+  ["GB","europe","بريطانيا","United Kingdom"], ["DE","europe","ألمانيا","Germany"], ["FR","europe","فرنسا","France"],
+  ["IT","europe","إيطاليا","Italy"], ["ES","europe","إسبانيا","Spain"], ["NL","europe","هولندا","Netherlands"],
+  ["BE","europe","بلجيكا","Belgium"], ["CH","europe","سويسرا","Switzerland"], ["AT","europe","النمسا","Austria"],
+  ["SE","europe","السويد","Sweden"], ["NO","europe","النرويج","Norway"], ["DK","europe","الدنمارك","Denmark"],
+  ["IE","europe","أيرلندا","Ireland"], ["PL","europe","بولندا","Poland"], ["GR","europe","اليونان","Greece"],
+  ["PT","europe","البرتغال","Portugal"],
+  ["US","americas","الولايات المتحدة","United States"], ["CA","americas","كندا","Canada"],
+  ["MX","americas","المكسيك","Mexico"], ["BR","americas","البرازيل","Brazil"], ["AR","americas","الأرجنتين","Argentina"],
+  ["AU","oceania","أستراليا","Australia"], ["NZ","oceania","نيوزيلندا","New Zealand"],
+  ["ET","africa","إثيوبيا","Ethiopia"], ["KE","africa","كينيا","Kenya"], ["NG","africa","نيجيريا","Nigeria"],
+  ["ZA","africa","جنوب أفريقيا","South Africa"], ["GH","africa","غانا","Ghana"], ["UG","africa","أوغندا","Uganda"],
+  ["TZ","africa","تنزانيا","Tanzania"],
+  ["XX","other","دولة أخرى","Other country"],
 ];
+
+const TS_ZONES = {
+  gulf: ["الخليج","Gulf"], mena: ["الشرق الأوسط وشمال أفريقيا","Middle East & North Africa"],
+  asia: ["آسيا","Asia"], europe: ["أوروبا","Europe"], americas: ["الأمريكتان","Americas"],
+  africa: ["أفريقيا","Africa"], oceania: ["أوقيانوسيا","Oceania"], other: ["وجهات أخرى","Other destinations"],
+};
+
+const TS_SERVICES = {
+  dry: ["شحن جاف محلي","Local dry shipping"],
+  cold: ["شحن مبرّد","Cold-chain shipping"],
+  intl: ["شحن دولي","International shipping"],
+  sudan: ["الشحن إلى السودان","Shipping to Sudan"],
+};
+
+const TS_TEMPS = {
+  chill: ["مبرّد 2 إلى 8°م","Chilled 2 to 8°C"],
+  cool: ["بارد 0 إلى 4°م","Cool 0 to 4°C"],
+  freeze: ["مجمّد −18°م","Frozen −18°C"],
+  deep: ["تجميد عميق −25°م أو أقل","Deep freeze −25°C or below"],
+};
+
+const TS_ADDONS = ["express", "pickup", "pack", "fragile"];
 
 function tsLang(){
   return (typeof masarGetLang === "function" && masarGetLang()) || "ar";
 }
 function tsDict(){
-  const lang = tsLang();
-  return (typeof MASAR_DICT !== "undefined" && MASAR_DICT[lang]) || {};
+  return (typeof MASAR_DICT !== "undefined" && MASAR_DICT[tsLang()]) || {};
 }
-function tsL(ar, en, ur){
-  const lang = tsLang();
-  return lang === "en" ? en : lang === "ur" ? ur : ar;
-}
-function tsPick(row){
-  const lang = tsLang();
-  if(lang === "en") return row[2];
-  if(lang === "ur") return row[3];
-  return row[1];
-}
+function tsL(pair){ return tsLang() === "en" ? pair[1] : pair[0]; }
 function tsRound2(n){ return Math.round((Number(n) + Number.EPSILON) * 100) / 100; }
-function tsMoney(n, lang){
+function tsMoney(n){
   const value = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(tsRound2(n));
-  if((lang || tsLang()) === "en") return "SAR " + value;
-  return value + " ر.س";
+  return tsLang() === "en" ? "SAR " + value : value + " ر.س";
 }
 function tsEsc(s){
   return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
@@ -231,6 +176,7 @@ function tsExtraUnits(billable, included){
 }
 function tsResolveTemp(temperature, customTemp){
   if(temperature === "custom"){
+    if(customTemp === "" || customTemp === null || customTemp === undefined) return null;
     const t = Number(customTemp);
     if(!Number.isFinite(t)) return null;
     if(t <= -25) return "deep";
@@ -238,76 +184,34 @@ function tsResolveTemp(temperature, customTemp){
     if(t <= 4) return "cool";
     return "chill";
   }
-  if(TS_RATES.temp[temperature] === undefined) return null;
-  return temperature;
+  return TS_RATES.temp[temperature] === undefined ? null : temperature;
 }
 function tsEta(service, zone, express){
   const table = TS_ETA[service];
-  if(!table) return { ar:"—", en:"—", ur:"—" };
+  if(!table) return "—";
   if((service === "dry" || service === "cold") && express){
-    return table[zone === "same" ? "sameFast" : "betweenFast"];
+    return tsL(table[zone === "same" ? "sameFast" : "betweenFast"]);
   }
-  const base = table[zone] || table.other || table.between;
-  if(express){
-    return {
-      ar: base.ar + " · أولوية",
-      en: base.en + " · priority",
-      ur: base.ur + " · ترجیح",
-    };
-  }
-  return base;
-}
-function tsServiceName(service){
-  const names = {
-    dry: ["شحن جاف محلي","Local dry shipping","مقامی خشک شپنگ"],
-    cold: ["شحن مبرّد","Cold-chain shipping","کولڈ چین شپنگ"],
-    intl: ["شحن دولي","International shipping","بین الاقوامی شپنگ"],
-    sudan: ["الشحن إلى السودان","Shipping to Sudan","سوڈان شپنگ"],
-  };
-  const row = names[service] || names.dry;
-  return tsL(row[0], row[1], row[2]);
-}
-function tsTempLabel(key, custom){
-  const labels = {
-    chill: ["مبرّد 2 إلى 8°م","Chilled 2 to 8°C","ٹھنڈا 2 تا 8°C"],
-    cool: ["بارد 0 إلى 4°م","Cool 0 to 4°C","سرد 0 تا 4°C"],
-    freeze: ["مجمّد −18°م","Frozen −18°C","منجمد −18°C"],
-    deep: ["تجميد عميق −25°م أو أقل","Deep freeze −25°C or below","گہری منجمد −25°C"],
-  };
-  if(key === "custom") return tsTempLabel(tsResolveTemp("custom", custom), custom);
-  const row = labels[key];
-  if(!row) return "—";
-  const name = tsL(row[0], row[1], row[2]);
-  if(custom !== undefined && custom !== "" && custom !== null && key) return name;
-  return name;
+  const base = tsL(table[zone] || table.other || table.between);
+  return express ? base + tsL([" · أولوية", " · priority"]) : base;
 }
 function tsSaName(code){
   const row = TS_SA.find((item) => item[0] === code);
-  if(!row) return "—";
-  const lang = tsLang();
-  if(lang === "en") return row[2];
-  if(lang === "ur") return row[3];
-  return row[1];
+  return row ? tsL([row[1], row[2]]) : "—";
 }
 function tsSdName(code){
   const row = TS_SUDAN.find((item) => item[0] === code);
-  if(!row) return "—";
-  const lang = tsLang();
-  if(lang === "en") return row[3];
-  if(lang === "ur") return row[4];
-  return row[2];
+  return row ? tsL([row[2], row[3]]) : "—";
 }
 function tsCountry(code){
   return TS_COUNTRIES.find((row) => row[0] === code) || null;
 }
 function tsCountryName(code){
   const row = tsCountry(code);
-  if(!row) return code || "—";
-  const lang = tsLang();
-  if(lang === "en") return row[3];
-  if(lang === "ur") return row[4];
-  return row[2];
+  return row ? tsL([row[2], row[3]]) : (code || "—");
 }
+function tsServiceName(service){ return tsL(TS_SERVICES[service] || TS_SERVICES.dry); }
+function tsTempLabel(key){ return TS_TEMPS[key] ? tsL(TS_TEMPS[key]) : "—"; }
 
 function trackshipQuote(input){
   const service = input.service;
@@ -348,86 +252,27 @@ function trackshipQuote(input){
   const extraWeightFee = tsRound2(extraUnits * rate.perKg);
   const expressFee = input.express ? TS_RATES.express[service] : 0;
   const pickupFee = input.pickup ? TS_RATES.pickup : 0;
+  const packFee = input.pack ? TS_RATES.pack : 0;
+  const fragileFee = input.fragile ? TS_RATES.fragile : 0;
   let insuranceFee = 0;
   const declared = Number(input.declaredValue) || 0;
   if(input.insure && declared > 0){
     insuranceFee = tsRound2(Math.max(declared * TS_RATES.insuranceRate, TS_RATES.insuranceMin));
   }
-  const subtotal = tsRound2(rate.base + extraWeightFee + tempFee + expressFee + pickupFee + insuranceFee);
+  const subtotal = tsRound2(rate.base + extraWeightFee + tempFee + expressFee + pickupFee + packFee + fragileFee + insuranceFee);
   const vat = tsRound2(subtotal * TS_RATES.vat);
   const total = tsRound2(subtotal + vat);
 
   return {
-    ok:true, service, zone, includedKg: rate.includedKg,
+    ok:true, service, zone, includedKg: rate.includedKg, perKg: rate.perKg,
     actual: tsRound2(weight),
     volumetric: tsRound2(volumetric),
     billable: tsRound2(billable),
     extraUnits, base: rate.base, extraWeightFee, tempFee, tempKey,
-    expressFee, pickupFee, insuranceFee, subtotal, vat, total,
-    eta: tsEta(service, zone, !!input.express),
-    perKg: rate.perKg,
+    expressFee, pickupFee, packFee, fragileFee, insuranceFee, subtotal, vat, total,
   };
 }
 
-let _tsWasm = null;
-let _tsWasmTried = false;
-async function tsLoadWasm(){
-  if(_tsWasmTried) return _tsWasm;
-  _tsWasmTried = true;
-  if(typeof fetch !== "function" || typeof WebAssembly === "undefined") return null;
-  try{
-    const resp = await fetch("masar_calc.wasm");
-    if(!resp.ok) throw new Error("wasm missing");
-    const { instance } = await WebAssembly.instantiate(await resp.arrayBuffer());
-    _tsWasm = instance.exports;
-  }catch(err){
-    _tsWasm = null;
-  }
-  return _tsWasm;
-}
-
-async function trackshipQuoteAsync(input){
-  const quote = trackshipQuote(input);
-  const wasm = await tsLoadWasm();
-  if(!wasm || !quote.ok) return quote;
-  const volumetric = wasm.volumetric_weight(Number(input.length)||0, Number(input.width)||0, Number(input.height)||0);
-  const billable = Math.max(Number(input.weight)||0, volumetric, TS_RATES.minBillable);
-  const extraUnits = tsExtraUnits(billable, quote.includedKg);
-  const billed = quote.includedKg + extraUnits;
-  const shippingExact = wasm.tiered_price(quote.base, quote.includedKg, quote.perKg, billed, quote.tempFee, quote.expressFee);
-  let insuranceFee = 0;
-  const declared = Number(input.declaredValue) || 0;
-  if(input.insure && declared > 0){
-    insuranceFee = wasm.round2(wasm.insurance_fee(declared, TS_RATES.insuranceRate, TS_RATES.insuranceMin));
-  }
-  const subtotal = wasm.round2(shippingExact + quote.pickupFee + insuranceFee);
-  const vat = wasm.round2(subtotal * TS_RATES.vat);
-  const total = wasm.round2(subtotal + vat);
-  const extraWeightFee = wasm.round2(Math.max(0, shippingExact - quote.base - quote.tempFee - quote.expressFee));
-  return {
-    ...quote,
-    volumetric: wasm.round2(volumetric),
-    billable: wasm.round2(billable),
-    extraUnits,
-    extraWeightFee,
-    insuranceFee: wasm.round2(insuranceFee),
-    subtotal, vat, total,
-    engine: "wasm",
-  };
-}
-
-function trackshipLoadCart(){
-  try{
-    const data = JSON.parse(localStorage.getItem(TRACKSHIP_CART_KEY) || "[]");
-    return Array.isArray(data) ? data : [];
-  }catch(err){
-    return [];
-  }
-}
-function trackshipSaveCart(items){
-  localStorage.setItem(TRACKSHIP_CART_KEY, JSON.stringify(items));
-  if(typeof trackshipPaintCartCount === "function") trackshipPaintCartCount();
-}
 function trackshipNewId(){
   const d = new Date();
   const p = (n) => String(n).padStart(2, "0");
@@ -435,14 +280,50 @@ function trackshipNewId(){
   return `TS-${p(d.getFullYear() % 100)}${p(d.getMonth()+1)}${p(d.getDate())}-${rand}`;
 }
 
-function trackshipRouteText(item){
-  const input = item.input;
+function trackshipRouteText(input){
   if(input.service === "intl"){
     const country = input.country === "XX" && input.countryOther ? input.countryOther : tsCountryName(input.country);
-    return country + " — " + (input.destCityText || "");
+    return input.destCityText ? country + " — " + input.destCityText : country;
   }
-  if(input.service === "sudan") return tsSdName(input.destCity);
+  if(input.service === "sudan") return tsSdName(input.destCity) + tsL(["، السودان", ", Sudan"]);
   return tsSaName(input.destCity);
+}
+
+function trackshipOrderMessage(id, input, quote){
+  const d = tsDict();
+  const kg = d.kg || "kg";
+  const sep = tsLang() === "en" ? ", " : "، ";
+  const lines = [d.msg_title, `${d.msg_order}: ${id}`, `${d.msg_service}: ${tsServiceName(input.service)}`];
+  let weightLine = `${d.msg_weight}: ${input.weight} ${kg}`;
+  if(quote.ok && Math.abs(quote.billable - quote.actual) > 0.001) weightLine += ` (${d.msg_billable} ${quote.billable} ${kg})`;
+  lines.push(weightLine);
+  lines.push(`${d.msg_from}: ${tsSaName(input.senderCity)}`);
+  lines.push(`${d.msg_to}: ${trackshipRouteText(input)}`);
+  if(input.service === "cold") lines.push(`${d.msg_temp}: ${tsTempLabel(tsResolveTemp(input.temperature, input.customTemp))}${input.temperature === "custom" ? ` (${input.customTemp}°)` : ""}`);
+  if(input.contents) lines.push(`${d.msg_contents}: ${input.contents}`);
+
+  lines.push("", `— ${d.msg_sender} —`, input.senderName, input.senderPhone, tsSaName(input.senderCity) + sep + input.senderAddress);
+  lines.push("", `— ${d.msg_recv} —`, input.recvName, input.recvPhone, input.recvAddress);
+
+  const addons = [];
+  if(input.express) addons.push(d.f_express);
+  if(input.pickup) addons.push(d.f_pickup + (input.pickupDate ? ` (${d.msg_pickup_on} ${input.pickupDate})` : ""));
+  if(input.pack) addons.push(d.f_pack);
+  if(input.fragile) addons.push(d.f_fragile);
+  if(input.insure && Number(input.declaredValue) > 0) addons.push(`${d.msg_insured} ${tsMoney(input.declaredValue)}`);
+  lines.push("", `${d.msg_addons}: ${addons.length ? addons.join(sep) : d.msg_none}`);
+  if(Number(input.length) > 0 && Number(input.width) > 0 && Number(input.height) > 0){
+    lines.push(`${d.msg_dims}: ${input.length}×${input.width}×${input.height} cm`);
+  }
+  if(input.notes) lines.push(`${d.msg_notes}: ${input.notes}`);
+
+  if(quote.ok){
+    lines.push("", `${d.msg_price}:`,
+      `${d.quote_sub}: ${tsMoney(quote.subtotal)}`,
+      `${d.quote_vat}: ${tsMoney(quote.vat)}`,
+      `${d.quote_total}: ${tsMoney(quote.total)}`);
+  }
+  return lines.join("\n");
 }
 
 function trackshipFromNet(key){
@@ -452,68 +333,59 @@ function trackshipFromNet(key){
   if(key === "sudan") return TS_RATES.sudan.capital.base;
   if(key === "express") return TS_RATES.express.dry;
   if(key === "pickup") return TS_RATES.pickup;
+  if(key === "pack") return TS_RATES.pack;
+  if(key === "fragile") return TS_RATES.fragile;
   return 0;
 }
 
 function trackshipPaintFromPrices(){
-  const lang = tsLang();
   const prefix = tsDict().price_from || "من";
   document.querySelectorAll("[data-from]").forEach((el) => {
     const net = trackshipFromNet(el.getAttribute("data-from"));
-    el.textContent = prefix + " " + tsMoney(net * (1 + TS_RATES.vat), lang);
+    el.textContent = prefix + " " + tsMoney(net * (1 + TS_RATES.vat));
   });
 }
 
 function trackshipRateRows(tab){
-  const vat = 1 + TS_RATES.vat;
   const row = (name, net, extra) => ({
     name,
     net: tsMoney(net),
     extra: extra === null || extra === undefined ? "—" : tsMoney(extra),
-    incl: tsMoney(net * vat),
+    incl: tsMoney(net * (1 + TS_RATES.vat)),
   });
-  const L = tsL;
   if(tab === "cold"){
     return [
-      row(L("مبرّد داخل المدينة (2–8°م)","Cold, same city (2–8°C)","کولڈ، اسی شہر میں"), TS_RATES.cold.same.base, TS_RATES.cold.same.perKg),
-      row(L("مبرّد بين المدن","Cold, between cities","کولڈ، شہروں کے درمیان"), TS_RATES.cold.between.base, TS_RATES.cold.between.perKg),
-      row(L("إضافة بارد 0–4°م","Cool add-on 0–4°C","سرد اضافہ"), TS_RATES.temp.cool, null),
-      row(L("إضافة مجمّد −18°م","Frozen add-on −18°C","منجمد اضافہ"), TS_RATES.temp.freeze, null),
-      row(L("إضافة تجميد عميق","Deep-freeze add-on","گہری منجمد اضافہ"), TS_RATES.temp.deep, null),
+      row(tsL(["مبرّد داخل المدينة (2–8°م)","Cold, same city (2–8°C)"]), TS_RATES.cold.same.base, TS_RATES.cold.same.perKg),
+      row(tsL(["مبرّد بين المدن","Cold, between cities"]), TS_RATES.cold.between.base, TS_RATES.cold.between.perKg),
+      row(tsL(["إضافة بارد 0–4°م","Cool add-on 0–4°C"]), TS_RATES.temp.cool, null),
+      row(tsL(["إضافة مجمّد −18°م","Frozen add-on −18°C"]), TS_RATES.temp.freeze, null),
+      row(tsL(["إضافة تجميد عميق","Deep-freeze add-on"]), TS_RATES.temp.deep, null),
     ];
   }
   if(tab === "intl"){
-    const zones = [
-      ["gulf","الخليج","Gulf","خلیج"],
-      ["mena","الشرق الأوسط وشمال أفريقيا","MENA","مشرق وسطیٰ"],
-      ["asia","آسيا","Asia","ایشیا"],
-      ["europe","أوروبا","Europe","یورپ"],
-      ["americas","أمريكا","Americas","امریکہ"],
-      ["africa","أفريقيا","Africa","افریقہ"],
-      ["oceania","أوقيانوسيا","Oceania","اوشینیا"],
-      ["other","وجهة أخرى","Other destination","دیگر"],
-    ];
-    return zones.map(([key, ar, en, ur]) => row(L(ar, en, ur), TS_RATES.intl[key].base, TS_RATES.intl[key].perKg));
+    return Object.keys(TS_ZONES).map((key) => row(tsL(TS_ZONES[key]), TS_RATES.intl[key].base, TS_RATES.intl[key].perKg));
   }
   if(tab === "sudan"){
     return [
-      row(L("الخرطوم وأم درمان وبحري","Khartoum metro","خرطوم میٹرو"), TS_RATES.sudan.capital.base, TS_RATES.sudan.capital.perKg),
-      row(L("بورتسودان","Port Sudan","پورٹ سوڈان"), TS_RATES.sudan.port.base, TS_RATES.sudan.port.perKg),
-      row(L("بقية مدن السودان","Other Sudanese cities","دیگر سوڈانی شہر"), TS_RATES.sudan.other.base, TS_RATES.sudan.other.perKg),
+      row(tsL(["الخرطوم وأم درمان وبحري","Khartoum, Omdurman, Bahri"]), TS_RATES.sudan.capital.base, TS_RATES.sudan.capital.perKg),
+      row(tsL(["بورتسودان","Port Sudan"]), TS_RATES.sudan.port.base, TS_RATES.sudan.port.perKg),
+      row(tsL(["بقية مدن السودان","Other Sudanese cities"]), TS_RATES.sudan.other.base, TS_RATES.sudan.other.perKg),
     ];
   }
   if(tab === "extra"){
     return [
-      row(L("توصيل سريع — جاف","Express — dry","ایکسپریس — خشک"), TS_RATES.express.dry, null),
-      row(L("توصيل سريع — مبرّد","Express — cold","ایکسپریس — کولڈ"), TS_RATES.express.cold, null),
-      row(L("توصيل سريع — دولي","Express — international","ایکسپریس — بین الاقوامی"), TS_RATES.express.intl, null),
-      row(L("توصيل سريع — السودان","Express — Sudan","ایکسپریس — سوڈان"), TS_RATES.express.sudan, null),
-      row(L("استلام من الباب","Door pickup","دروازے سے پک اپ"), TS_RATES.pickup, null),
+      row(tsL(["توصيل سريع — جاف","Express — dry"]), TS_RATES.express.dry, null),
+      row(tsL(["توصيل سريع — مبرّد","Express — cold"]), TS_RATES.express.cold, null),
+      row(tsL(["توصيل سريع — دولي","Express — international"]), TS_RATES.express.intl, null),
+      row(tsL(["توصيل سريع — السودان","Express — Sudan"]), TS_RATES.express.sudan, null),
+      row(tsL(["استلام من الباب","Door pickup"]), TS_RATES.pickup, null),
+      row(tsL(["تغليف احترافي","Professional packing"]), TS_RATES.pack, null),
+      row(tsL(["مناولة القابل للكسر","Fragile handling"]), TS_RATES.fragile, null),
     ];
   }
   return [
-    row(L("جاف داخل المدينة","Dry, same city","خشک، اسی شہر میں"), TS_RATES.dry.same.base, TS_RATES.dry.same.perKg),
-    row(L("جاف بين المدن","Dry, between cities","خشک، شہروں کے درمیان"), TS_RATES.dry.between.base, TS_RATES.dry.between.perKg),
+    row(tsL(["جاف داخل المدينة","Dry, same city"]), TS_RATES.dry.same.base, TS_RATES.dry.same.perKg),
+    row(tsL(["جاف بين المدن","Dry, between cities"]), TS_RATES.dry.between.base, TS_RATES.dry.between.perKg),
   ];
 }
 
@@ -524,10 +396,10 @@ function trackshipPaintRateTable(){
   const tab = active ? active.getAttribute("data-rate-tab") : "local";
   const d = tsDict();
   const rows = trackshipRateRows(tab).map((item) =>
-    `<tr><td>${tsEsc(item.name)}</td><td class="num">${tsEsc(item.net)}</td><td class="num">${tsEsc(item.extra)}</td><td class="num">${tsEsc(item.incl)}</td></tr>`
+    `<tr><td>${tsEsc(item.name)}</td><td class="num">${tsEsc(item.net)}</td><td class="num">${tsEsc(item.extra)}</td><td class="num strong">${tsEsc(item.incl)}</td></tr>`
   ).join("");
   mount.innerHTML = `<div class="table-wrap"><table>
-    <thead><tr><th>${tsEsc(d.th_service || "الخدمة")}</th><th>${tsEsc(d.th_base || "حتى 5 كجم")}</th><th>${tsEsc(d.th_extra || "كل كجم إضافي")}</th><th>${tsEsc(d.th_incl || "شامل الضريبة")}</th></tr></thead>
+    <thead><tr><th>${tsEsc(d.th_service)}</th><th>${tsEsc(d.th_base)}</th><th>${tsEsc(d.th_extra)}</th><th>${tsEsc(d.th_incl)}</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
 }
 
@@ -547,11 +419,25 @@ function tsFillSelect(el, options, placeholder){
   });
 }
 
-function tsSaOptions(){
-  return TS_SA.map((row) => ({ value: row[0], label: tsSaName(row[0]) }));
-}
-function tsSdOptions(){
-  return TS_SUDAN.map((row) => ({ value: row[0], label: tsSdName(row[0]) }));
+function tsFillCountries(el, placeholder){
+  const current = el.value;
+  el.innerHTML = "";
+  const ph = document.createElement("option");
+  ph.value = "";
+  ph.textContent = placeholder;
+  el.appendChild(ph);
+  Object.keys(TS_ZONES).forEach((zone) => {
+    const group = document.createElement("optgroup");
+    group.label = tsL(TS_ZONES[zone]);
+    TS_COUNTRIES.filter((row) => row[1] === zone).forEach((row) => {
+      const opt = document.createElement("option");
+      opt.value = row[0];
+      opt.textContent = tsCountryName(row[0]);
+      if(opt.value === current) opt.selected = true;
+      group.appendChild(opt);
+    });
+    el.appendChild(group);
+  });
 }
 
 function trackshipInitBooking(){
@@ -562,105 +448,79 @@ function trackshipInitBooking(){
   const service = params.get("service");
   const chooser = document.getElementById("serviceChooser");
   const layout = document.getElementById("bookLayout");
-  const known = ["dry","cold","intl","sudan"];
-  if(!known.includes(service)){
-    if(chooser) chooser.hidden = false;
-    if(layout) layout.hidden = true;
+  if(!TS_SERVICES[service]){
+    chooser.hidden = false;
+    layout.hidden = true;
+    const carry = TS_ADDONS.filter((key) => params.get(key) === "1").map((key) => "&" + key + "=1").join("");
+    chooser.querySelectorAll("a[data-service]").forEach((a) => {
+      a.href = "calculator.html?service=" + a.getAttribute("data-service") + carry;
+    });
     return;
   }
-  if(chooser) chooser.hidden = true;
-  if(layout) layout.hidden = false;
+  chooser.hidden = true;
+  layout.hidden = false;
   if(form.dataset.bound !== "1"){
-    if(params.get("express") === "1") form.expressChk.checked = true;
-    if(params.get("pickup") === "1") form.pickupChk.checked = true;
+    TS_ADDONS.forEach((key) => { if(params.get(key) === "1") form[key + "Chk"].checked = true; });
   }
 
+  const d = tsDict();
   const banner = document.getElementById("serviceBanner");
   banner.className = "service-banner " + service;
-  banner.innerHTML = `<strong>${tsEsc(tsServiceName(service))}</strong><a href="calculator.html">${tsEsc(tsDict().change_service || "تغيير الخدمة")}</a>`;
-  document.title = tsServiceName(service) + " | Track Ship";
+  banner.innerHTML = `<span class="sb-icon" aria-hidden="true">${document.querySelector(`[data-icon="${service}"]`)?.innerHTML || ""}</span><strong>${tsEsc(tsServiceName(service))}</strong><a href="calculator.html">${tsEsc(d.change_service)}</a>`;
+  document.title = tsServiceName(service) + " | Track System";
 
   document.querySelectorAll("[data-show]").forEach((el) => {
     el.hidden = !el.getAttribute("data-show").split(/\s+/).includes(service);
   });
 
-  const d = tsDict();
-  tsFillSelect(form.senderCity, tsSaOptions(), d.ph_city || "اختر المدينة");
-  if(form.destSa) tsFillSelect(form.destSa, tsSaOptions(), d.ph_dest || "اختر الوجهة");
-  if(form.destSd) tsFillSelect(form.destSd, tsSdOptions(), d.ph_sudan || "اختر مدينة في السودان");
-  const country = form.country;
-  if(country){
-    const current = country.value;
-    country.innerHTML = "";
-    const ph = document.createElement("option");
-    ph.value = "";
-    ph.textContent = d.ph_country || "اختر الدولة";
-    country.appendChild(ph);
-    const zones = ["gulf","mena","asia","europe","americas","africa","oceania","other"];
-    const zoneNames = {
-      gulf: tsL("الخليج","Gulf","خلیج"),
-      mena: tsL("الشرق الأوسط وشمال أفريقيا","MENA","مشرق وسطیٰ"),
-      asia: tsL("آسيا","Asia","ایشیا"),
-      europe: tsL("أوروبا","Europe","یورپ"),
-      americas: tsL("الأمريكتان","Americas","امریکہ"),
-      africa: tsL("أفريقيا","Africa","افریقہ"),
-      oceania: tsL("أوقيانوسيا","Oceania","اوشینیا"),
-      other: tsL("أخرى","Other","دیگر"),
-    };
-    zones.forEach((zone) => {
-      const group = document.createElement("optgroup");
-      group.label = zoneNames[zone];
-      TS_COUNTRIES.filter((row) => row[1] === zone).forEach((row) => {
-        const opt = document.createElement("option");
-        opt.value = row[0];
-        opt.textContent = tsCountryName(row[0]);
-        if(opt.value === current) opt.selected = true;
-        group.appendChild(opt);
-      });
-      country.appendChild(group);
-    });
+  const saOptions = TS_SA.map((row) => ({ value: row[0], label: tsSaName(row[0]) }));
+  tsFillSelect(form.senderCity, saOptions, d.ph_city);
+  tsFillSelect(form.destSa, saOptions, d.ph_dest);
+  tsFillSelect(form.destSd, TS_SUDAN.map((row) => ({ value: row[0], label: tsSdName(row[0]) })), d.ph_sudan);
+  tsFillCountries(form.country, d.ph_country);
+
+  const fees = { express: TS_RATES.express[service], pickup: TS_RATES.pickup, pack: TS_RATES.pack, fragile: TS_RATES.fragile };
+  Object.keys(fees).forEach((key) => {
+    const el = document.getElementById(key + "Price");
+    if(el) el.textContent = "+ " + tsMoney(fees[key] * (1 + TS_RATES.vat));
+  });
+  if(form.pickupDate && !form.pickupDate.min){
+    form.pickupDate.min = new Date().toISOString().slice(0, 10);
   }
 
-  const expressPrice = document.getElementById("expressPrice");
-  const pickupPrice = document.getElementById("pickupPrice");
-  if(expressPrice) expressPrice.textContent = "+ " + tsMoney(TS_RATES.express[service]);
-  if(pickupPrice) pickupPrice.textContent = "+ " + tsMoney(TS_RATES.pickup);
-
   const quoteBox = document.getElementById("quoteBox");
+  const sentBox = document.getElementById("sentBox");
 
   function readInput(){
-    const temperature = form.temperature ? form.temperature.value : "";
+    const val = (name) => (form[name] ? form[name].value.trim() : "");
     return {
       service,
-      weight: form.weight.value,
-      length: form.dimL.value,
-      width: form.dimW.value,
-      height: form.dimH.value,
-      senderCity: form.senderCity.value,
-      destCity: service === "sudan" ? form.destSd.value : form.destSa.value,
-      destCityText: form.destCityIntl ? form.destCityIntl.value.trim() : "",
-      country: form.country ? form.country.value : "",
-      countryOther: form.countryOther ? form.countryOther.value.trim() : "",
-      contents: form.contents ? form.contents.value.trim() : "",
-      temperature,
-      customTemp: form.tempCustom ? form.tempCustom.value : "",
+      weight: val("weight"),
+      length: val("dimL"), width: val("dimW"), height: val("dimH"),
+      senderCity: val("senderCity"),
+      destCity: service === "sudan" ? val("destSd") : val("destSa"),
+      destCityText: val("destCityIntl"),
+      country: val("country"),
+      countryOther: val("countryOther"),
+      contents: (service === "intl" || service === "sudan") ? val("contents") : "",
+      temperature: val("temperature"),
+      customTemp: val("tempCustom"),
       express: form.expressChk.checked,
       pickup: form.pickupChk.checked,
+      pickupDate: form.pickupChk.checked ? val("pickupDate") : "",
+      pack: form.packChk.checked,
+      fragile: form.fragileChk.checked,
       insure: form.insureChk.checked,
-      declaredValue: form.declaredValue.value,
-      senderName: form.senderName.value.trim(),
-      senderPhone: form.senderPhone.value.trim(),
-      senderAddress: form.senderAddress.value.trim(),
-      recvName: form.recvName.value.trim(),
-      recvPhone: form.recvPhone.value.trim(),
-      recvAddress: form.recvAddress.value.trim(),
+      declaredValue: val("declaredValue"),
+      notes: val("notes"),
+      senderName: val("senderName"), senderPhone: val("senderPhone"), senderAddress: val("senderAddress"),
+      recvName: val("recvName"), recvPhone: val("recvPhone"), recvAddress: val("recvAddress"),
     };
   }
 
   function showErrors(errors){
     form.querySelectorAll("[data-error-for]").forEach((el) => {
-      const key = el.getAttribute("data-error-for");
-      const msg = errors[key];
+      const msg = errors[el.getAttribute("data-error-for")];
       el.hidden = !msg;
       el.textContent = msg || "";
       const field = el.closest(".field");
@@ -671,20 +531,17 @@ function trackshipInitBooking(){
   function validate(input, quote){
     const dict = tsDict();
     const errors = {};
-    const phoneOk = (value) => (value.replace(/\D/g, "").length >= 8);
+    const phoneOk = (value) => value.replace(/\D/g, "").length >= 8;
     if(!(Number(input.weight) > 0)) errors.weight = dict.err_weight;
-    else if(Number(input.weight) > 300 || (quote && quote.ok && quote.billable > 300)) errors.weight = dict.err_heavy;
-    if(service === "dry" || service === "cold"){
-      if(!input.destCity) errors.dest = dict.err_dest;
-    }
+    else if(Number(input.weight) > TS_RATES.maxKg || (quote.ok && quote.billable > TS_RATES.maxKg)) errors.weight = dict.err_heavy;
+    if((service === "dry" || service === "cold") && !input.destCity) errors.dest = dict.err_dest;
     if(service === "sudan" && !input.destCity) errors.destSd = dict.err_sudan;
     if(service === "intl"){
       if(!input.country) errors.country = dict.err_country;
       if(input.country === "XX" && input.countryOther.length < 2) errors.countryOther = dict.err_country;
       if(input.destCityText.length < 2) errors.destCity = dict.err_city;
-      if(input.contents.length < 3) errors.contents = dict.err_contents;
     }
-    if(service === "sudan" && input.contents.length < 3) errors.contents = dict.err_contents;
+    if((service === "intl" || service === "sudan") && input.contents.length < 3) errors.contents = dict.err_contents;
     if(service === "cold" && !tsResolveTemp(input.temperature, input.customTemp)) errors.temp = dict.err_temp;
     if(input.senderName.length < 2) errors.senderName = dict.err_name;
     if(!phoneOk(input.senderPhone)) errors.senderPhone = dict.err_phone;
@@ -697,163 +554,82 @@ function trackshipInitBooking(){
     return errors;
   }
 
-  async function paintQuote(){
+  function paintQuote(){
     const input = readInput();
-    const otherWrap = document.getElementById("countryOtherWrap");
-    const customWrap = document.getElementById("tempCustomWrap");
-    const valueWrap = document.getElementById("valueWrap");
-    if(otherWrap) otherWrap.hidden = input.country !== "XX";
-    if(customWrap) customWrap.hidden = input.temperature !== "custom";
-    if(valueWrap) valueWrap.hidden = !input.insure;
-    const quote = await trackshipQuoteAsync(input);
+    document.getElementById("countryOtherWrap").hidden = input.country !== "XX";
+    document.getElementById("tempCustomWrap").hidden = input.temperature !== "custom";
+    document.getElementById("valueWrap").hidden = !input.insure;
+    document.getElementById("pickupDateWrap").hidden = !input.pickup;
+    const quote = trackshipQuote(input);
     const dict = tsDict();
     if(!quote.ok){
-      quoteBox.innerHTML = `<p class="muted">${tsEsc(dict.quote_empty || "")}</p>`;
+      quoteBox.innerHTML = `<p class="muted">${tsEsc(dict.quote_empty)}</p>`;
       return;
     }
-    const lines = [
-      [dict.quote_base, quote.base],
-      [dict.quote_extra, quote.extraWeightFee],
-    ];
+    const lines = [[dict.quote_base, quote.base]];
+    if(quote.extraWeightFee) lines.push([dict.quote_extra, quote.extraWeightFee]);
     if(quote.tempFee) lines.push([dict.quote_temp, quote.tempFee]);
     if(quote.expressFee) lines.push([dict.quote_express, quote.expressFee]);
     if(quote.pickupFee) lines.push([dict.quote_pickup, quote.pickupFee]);
+    if(quote.packFee) lines.push([dict.quote_pack, quote.packFee]);
+    if(quote.fragileFee) lines.push([dict.quote_fragile, quote.fragileFee]);
     if(quote.insuranceFee) lines.push([dict.quote_ins, quote.insuranceFee]);
-    const lang = tsLang();
-    const rows = lines.map(([label, amount]) => `<div><span>${tsEsc(label || "")}</span><b>${tsEsc(tsMoney(amount, lang))}</b></div>`).join("");
-    const vol = quote.volumetric > 0 ? `<p class="muted">${tsEsc(dict.quote_vol || "")}: ${quote.volumetric.toFixed(2)} kg · ${tsEsc(dict.quote_bill || "")}: ${quote.billable.toFixed(2)} kg</p>` : "";
+    const rows = lines.map(([label, amount]) => `<div><span>${tsEsc(label)}</span><b>${tsEsc(tsMoney(amount))}</b></div>`).join("");
+    const vol = quote.volumetric > 0
+      ? `<p class="muted">${tsEsc(dict.quote_vol)}: ${quote.volumetric.toFixed(2)} ${tsEsc(dict.kg)} · ${tsEsc(dict.quote_bill)}: ${quote.billable.toFixed(2)} ${tsEsc(dict.kg)}</p>`
+      : "";
     quoteBox.innerHTML = `
-      <p class="muted">${tsEsc(tsServiceName(service))} · ${tsEsc(trackshipRouteText({ input }))}</p>
-      <div class="amount">${tsEsc(tsMoney(quote.total, lang))}</div>
-      <p class="muted">${tsEsc(dict.quote_eta || "")}: ${tsEsc(quote.eta[lang] || quote.eta.ar)}</p>
+      <p class="muted">${tsEsc(tsServiceName(service))} · ${tsEsc(trackshipRouteText(input))}</p>
+      <div class="amount">${tsEsc(tsMoney(quote.total))}</div>
+      <p class="muted">${tsEsc(dict.quote_eta)}: ${tsEsc(tsEta(service, quote.zone, input.express))}</p>
       ${vol}
       <div class="receipt-lines">
         ${rows}
-        <div><span>${tsEsc(dict.quote_sub || "")}</span><b>${tsEsc(tsMoney(quote.subtotal, lang))}</b></div>
-        <div><span>${tsEsc(dict.quote_vat || "")}</span><b>${tsEsc(tsMoney(quote.vat, lang))}</b></div>
-        <div class="grand"><span>${tsEsc(dict.quote_total || "")}</span><b>${tsEsc(tsMoney(quote.total, lang))}</b></div>
+        <div><span>${tsEsc(dict.quote_sub)}</span><b>${tsEsc(tsMoney(quote.subtotal))}</b></div>
+        <div><span>${tsEsc(dict.quote_vat)}</span><b>${tsEsc(tsMoney(quote.vat))}</b></div>
+        <div class="grand"><span>${tsEsc(dict.quote_total)}</span><b>${tsEsc(tsMoney(quote.total))}</b></div>
       </div>
-      <p class="muted">${tsEsc(dict.quote_note || "")}</p>`;
+      <p class="muted">${tsEsc(dict.quote_note)}</p>`;
   }
 
   if(form.dataset.bound !== "1"){
     form.dataset.bound = "1";
-    form.addEventListener("input", () => { paintQuote(); });
-    form.addEventListener("change", () => { paintQuote(); });
-    form.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const input = readInput();
-    const quote = await trackshipQuoteAsync(input);
-    const errors = validate(input, quote);
-    showErrors(errors);
-    if(Object.keys(errors).length){
-      const first = form.querySelector(".field.has-error");
-      if(first) first.scrollIntoView({ behavior:"smooth", block:"center" });
-      return;
-    }
-    const items = trackshipLoadCart();
-    items.push({ id: trackshipNewId(), createdAt: new Date().toISOString(), input });
-    trackshipSaveCart(items);
-    location.href = "cart.html";
+    form.addEventListener("input", paintQuote);
+    form.addEventListener("change", paintQuote);
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const input = readInput();
+      const quote = trackshipQuote(input);
+      const errors = validate(input, quote);
+      showErrors(errors);
+      if(Object.keys(errors).length){
+        const first = form.querySelector(".field.has-error");
+        if(first) first.scrollIntoView({ behavior:"smooth", block:"center" });
+        return;
+      }
+      const id = trackshipNewId();
+      const message = trackshipOrderMessage(id, input, quote);
+      const url = tsWaLink(message);
+      window.open(url, "_blank", "noopener");
+      const dict = tsDict();
+      sentBox.hidden = false;
+      sentBox.innerHTML = `
+        <h3>${tsEsc(dict.sent_h)}</h3>
+        <p>${tsEsc(dict.sent_order)}: <b class="num" dir="ltr">${tsEsc(id)}</b></p>
+        <p class="muted">${tsEsc(dict.sent_p)} <a dir="ltr" href="tel:+${TS_WA_NUMBER}">+966 59 728 1619</a></p>
+        <div class="sent-actions">
+          <a class="btn btn-wa btn-block" target="_blank" rel="noopener" href="${tsEsc(url)}">${tsEsc(dict.sent_open)}</a>
+          <button type="button" class="btn btn-line btn-block" id="copyMsg">${tsEsc(dict.sent_copy)}</button>
+        </div>`;
+      document.getElementById("copyMsg").addEventListener("click", async () => {
+        try{ await navigator.clipboard.writeText(message); }catch(err){ /* clipboard can be blocked */ }
+        masarToast(tsDict().sent_copied);
+      });
+      sentBox.scrollIntoView({ behavior:"smooth", block:"center" });
     });
   }
 
   paintQuote();
-}
-
-function trackshipOrderText(items){
-  const lang = tsLang();
-  return items.map((item) => {
-    const q = trackshipQuote(item.input);
-    const lines = [
-      item.id + " — " + tsServiceName(item.input.service),
-      tsL("الوجهة: ","Destination: ","منزل: ") + trackshipRouteText(item),
-      tsL("الوزن: ","Weight: ","وزن: ") + item.input.weight + " kg",
-    ];
-    if(item.input.contents) lines.push(tsL("المحتويات: ","Contents: ","مواد: ") + item.input.contents);
-    if(item.input.service === "cold") lines.push(tsL("الحرارة: ","Temperature: ","درجہ حرارت: ") + tsTempLabel(tsResolveTemp(item.input.temperature, item.input.customTemp)));
-    lines.push(tsL("المرسل: ","Sender: ","بھیجنے والا: ") + item.input.senderName + " / " + item.input.senderPhone);
-    lines.push(tsL("المستلم: ","Recipient: ","وصول کنندہ: ") + item.input.recvName + " / " + item.input.recvPhone);
-    if(item.input.express) lines.push(tsL("توصيل سريع","Express","ایکسپریس"));
-    if(item.input.pickup) lines.push(tsL("استلام من الباب","Door pickup","دروازے سے پک اپ"));
-    if(q.ok) lines.push(tsL("الإجمالي شامل الضريبة: ","Total incl. VAT: ","ٹیکس سمیت کل: ") + tsMoney(q.total, lang));
-    return lines.join("\n");
-  }).join("\n\n");
-}
-
-let _cartGen = 0;
-async function trackshipInitCart(){
-  const root = document.getElementById("cartList");
-  if(!root) return;
-  const gen = ++_cartGen;
-  const items = trackshipLoadCart();
-  const empty = document.getElementById("cartEmpty");
-  const layout = document.getElementById("cartLayout");
-  const d = tsDict();
-  if(!items.length){
-    if(empty) empty.hidden = false;
-    if(layout) layout.hidden = true;
-    return;
-  }
-  if(empty) empty.hidden = true;
-  if(layout) layout.hidden = false;
-
-  const rendered = [];
-  for(const item of items){
-    const quote = await trackshipQuoteAsync(item.input);
-    rendered.push({ item, quote });
-  }
-  if(gen !== _cartGen) return;
-  const lang = tsLang();
-  root.innerHTML = rendered.map(({ item, quote }) => {
-    const input = item.input;
-    const bits = [
-      tsL("الوزن ","Weight ","وزن ") + input.weight + " kg",
-      tsL("إلى ","To ","تا ") + trackshipRouteText(item),
-    ];
-    if(input.contents) bits.push(input.contents);
-    if(input.express) bits.push(d.f_express || "توصيل سريع");
-    if(input.pickup) bits.push(d.f_pickup || "استلام من الباب");
-    if(input.service === "cold") bits.push(tsTempLabel(tsResolveTemp(input.temperature, input.customTemp)));
-    return `<article class="cart-item ${tsEsc(input.service)}">
-      <header>
-        <div>
-          <h3>${tsEsc(tsServiceName(input.service))}</h3>
-          <div class="meta">${tsEsc(item.id)} · ${tsEsc(bits.join(" · "))}</div>
-          <div class="meta">${tsEsc(input.senderName)} → ${tsEsc(input.recvName)}</div>
-        </div>
-        <div>
-          <strong class="num">${quote.ok ? tsEsc(tsMoney(quote.total, lang)) : "—"}</strong>
-          <div><button type="button" class="ghost-btn" data-remove="${tsEsc(item.id)}">${tsEsc(d.cart_remove || "حذف")}</button></div>
-        </div>
-      </header>
-    </article>`;
-  }).join("");
-
-  root.querySelectorAll("[data-remove]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      trackshipSaveCart(trackshipLoadCart().filter((item) => item.id !== btn.getAttribute("data-remove")));
-      trackshipInitCart();
-    });
-  });
-
-  const ok = rendered.filter((row) => row.quote.ok);
-  const subtotal = tsRound2(ok.reduce((sum, row) => sum + row.quote.subtotal, 0));
-  const vat = tsRound2(ok.reduce((sum, row) => sum + row.quote.vat, 0));
-  const total = tsRound2(ok.reduce((sum, row) => sum + row.quote.total, 0));
-  document.getElementById("cartSubtotal").textContent = tsMoney(subtotal, lang);
-  document.getElementById("cartVat").textContent = tsMoney(vat, lang);
-  document.getElementById("cartTotal").textContent = tsMoney(total, lang);
-
-  const copyBtn = document.getElementById("copyOrder");
-  if(copyBtn && !copyBtn.dataset.bound){
-    copyBtn.dataset.bound = "1";
-    copyBtn.addEventListener("click", async () => {
-      const text = trackshipOrderText(trackshipLoadCart());
-      try{ await navigator.clipboard.writeText(text); }catch(err){ /* clipboard may be blocked */ }
-      if(typeof masarToast === "function") masarToast(tsDict().cart_copied || "تم النسخ");
-    });
-  }
 }
 
 function trackshipBoot(){
@@ -863,13 +639,14 @@ function trackshipBoot(){
     if(btn.dataset.bound) return;
     btn.dataset.bound = "1";
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".tab-btn").forEach((other) => other.classList.remove("active"));
-      btn.classList.add("active");
+      document.querySelectorAll(".tab-btn").forEach((other) => {
+        other.classList.toggle("active", other === btn);
+        other.setAttribute("aria-selected", other === btn ? "true" : "false");
+      });
       trackshipPaintRateTable();
     });
   });
   trackshipInitBooking();
-  trackshipInitCart();
 }
 
 if(typeof document !== "undefined"){
@@ -877,8 +654,7 @@ if(typeof document !== "undefined"){
   window.addEventListener("masar:langchange", () => {
     trackshipPaintFromPrices();
     trackshipPaintRateTable();
-  if(document.getElementById("bookForm")) trackshipInitBooking();
-    if(document.getElementById("cartList")) trackshipInitCart();
+    if(document.getElementById("bookForm")) trackshipInitBooking();
   });
 }
 

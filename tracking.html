@@ -3,109 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111F">
-<title>تتبع الشحنة | Track Ship</title>
-<meta name="description" content="تتبع شحنة Track Ship برقم التتبع.">
+<meta name="theme-color" content="#0A1830">
+<title>تتبع الشحنة | Track System</title>
+<meta name="description" content="تتبع شحنتك برقم بوليصة أرامكس أو رقم الطلب.">
+<link rel="icon" href="logo.png">
 <link rel="stylesheet" href="styles.css">
+<style>
+.track-tabs{display:flex;gap:8px;margin-bottom:18px}
+.track-tabs button{flex:1;padding:10px 14px;border:1.5px solid #2a3a5a;border-radius:10px;background:transparent;color:inherit;font:inherit;font-size:.95rem;cursor:pointer;transition:.2s}
+.track-tabs button.active{background:#E3141B;color:#fff;border-color:#E3141B}
+.track-result{margin-top:24px}
+.track-timeline{list-style:none;margin:0;padding:0}
+.track-timeline li{position:relative;padding:0 24px 24px 24px;border-right:2px solid #2a3a5a}
+html[dir=ltr] .track-timeline li{border-right:none;border-left:2px solid #2a3a5a}
+.track-timeline li:last-child{border-right-color:transparent;padding-bottom:0}
+html[dir=ltr] .track-timeline li:last-child{border-left-color:transparent}
+.track-timeline li::before{content:'';position:absolute;right:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:#E3141B;border:2px solid #0A1830}
+html[dir=ltr] .track-timeline li::before{right:auto;left:-7px}
+.track-timeline .tl-date{font-size:.82rem;color:#8899aa;margin-bottom:4px}
+.track-timeline .tl-desc{font-weight:600}
+.track-timeline .tl-loc{font-size:.85rem;color:#8899aa}
+.track-loading{text-align:center;padding:32px 0}
+.track-loading .spinner{display:inline-block;width:28px;height:28px;border:3px solid #2a3a5a;border-top-color:#E3141B;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.track-error{background:#2a1519;border:1px solid #E3141B44;border-radius:10px;padding:16px;color:#ff8888;text-align:center}
+.track-awb-badge{background:#1a2845;border-radius:8px;padding:12px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.track-awb-badge .awb-num{font-family:monospace;font-size:1.1rem;font-weight:700;letter-spacing:1px}
+.track-awb-badge .awb-label{font-size:.82rem;color:#8899aa}
+.aramex-badge{display:inline-flex;align-items:center;gap:6px;background:#E3141B18;color:#E3141B;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:6px}
+</style>
 </head>
 <body>
 <header class="site-header">
   <div class="wrap nav">
-    <a href="index.html" class="brand" aria-label="Track Ship">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M5 23c4-7 8-10 12-9" stroke="#E10600" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E10600"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
-      <span class="brand-text"><span class="brand-en">Track <i>Ship</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستمز</span></span>
+    <a href="index.html" class="brand" aria-label="Track System">
+      <span class="brand-mark"><img src="logo.png" alt="" onerror="this.parentNode.classList.add('no-logo');this.remove()"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 23c4-7 8-10 12-9" stroke="#E3141B" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E3141B"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+      <span class="brand-text"><span class="brand-en">Track <i>System</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستم</span></span>
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="index.html" data-i18n="nav_home">الرئيسية</a>
       <a href="index.html#services" data-i18n="nav_services">الخدمات</a>
+      <a href="index.html#rates" data-i18n="nav_rates">الأسعار</a>
       <a href="tracking.html" aria-current="page" data-i18n="nav_track">تتبع الشحنة</a>
-      <a href="cart.html" data-i18n="nav_cart">السلة</a>
       <a href="contact.html" data-i18n="nav_contact">تواصل معنا</a>
     </nav>
     <div class="nav-right">
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="ar">AR</button>
         <button type="button" data-lang="en">EN</button>
-        <button type="button" data-lang="ur">UR</button>
       </div>
-      <a class="icon-cart" href="cart.html" aria-label="Cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-        <span class="cart-count" data-cart-count hidden>0</span>
-      </a>
+      <a class="icon-btn" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
       <a href="calculator.html" class="btn btn-primary btn-sm" data-i18n="nav_order">اطلب شحن</a>
       <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
-
 <main class="wrap section-tight">
   <div class="page-hero">
     <span class="kicker" data-i18n="track_eyebrow">التتبع</span>
-    <h1 data-i18n="track_h1">أين وصلت الشحنة؟</h1>
-    <p class="lede" data-i18n="track_lede">أدخل رقم التتبع لعرض مراحلها.</p>
-    <form class="track-form" id="trackForm">
-      <input id="trackInput" name="code" data-i18n-ph="track_placeholder" placeholder="مثال: TS-774213-SA" autocomplete="off">
-      <button class="btn btn-primary" type="submit" data-i18n="track_btn">تتبع</button>
-    </form>
-    <p class="hint"><span data-i18n="track_try">جرّب رقمًا تجريبيًا:</span> <a href="#" id="sampleBtn">TS-774213-SA</a></p>
+    <h1 data-i18n="track_h1">أين وصلت شحنتك؟</h1>
+    <p class="lede">أدخل رقم بوليصة أرامكس (AWB) لتتبع شحنتك مباشرة، أو رقم الطلب للاستفسار عبر واتساب.</p>
   </div>
-  <div class="panel" id="emptyWrap"><p class="hint" data-i18n="track_notfound">أدخل رقم تتبع.</p></div>
-  <div class="panel" id="resultWrap" hidden>
-    <div class="route-map">
-      <div><b id="fromLabel">Riyadh</b><div class="hint" data-i18n="track_from">الرياض، السعودية</div></div>
-      <div class="line"></div>
-      <div><b id="toLabel">—</b><div class="hint" data-i18n="track_to">الوجهة</div></div>
+  <form class="panel track-card" id="trackForm" novalidate>
+    <div class="track-tabs">
+      <button type="button" class="active" data-tab="aramex">🚚 أرامكس (AWB)</button>
+      <button type="button" data-tab="whatsapp">💬 واتساب (رقم الطلب)</button>
     </div>
-    <div class="row" style="display:flex;justify-content:space-between;margin-bottom:8px"><span data-i18n="track_carrier">الناقل</span><b id="carrierName">Track Ship</b></div>
-    <div style="display:flex;justify-content:space-between;margin-bottom:18px"><span data-i18n="track_eta">الوصول المتوقع</span><b id="etaDate">—</b></div>
-    <div id="timelineTrack"></div>
-  </div>
+    <div class="track-form">
+      <div class="field">
+        <input class="input" id="trackInput" name="code" dir="ltr" autocomplete="off" placeholder="أدخل رقم بوليصة أرامكس (AWB)" aria-label="Tracking number">
+        <p class="field-error" id="trackErr" hidden></p>
+      </div>
+      <div class="field" id="phoneField" hidden>
+        <input class="input" id="trackPhone" name="phone" type="tel" dir="ltr" placeholder="جوالك (اختياري)" aria-label="Mobile">
+      </div>
+      <div class="field">
+        <button class="btn btn-primary" type="submit" id="trackBtn" style="width:100%"><span id="trackBtnText">تتبع الشحنة</span></button>
+      </div>
+    </div>
+    <p class="hint" id="trackHint">رقم بوليصة أرامكس يظهر في إشعار الشحن أو من فريق تراك سستم.</p>
+  </form>
+  <div class="track-result" id="trackResult"></div>
 </main>
-
 <footer>
-  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span></div>
+  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span><a class="latin" dir="ltr" href="tel:+966****1619">+966 59 728 1619</a></div>
 </footer>
+<a class="wa-float" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
 <script src="i18n.js"></script>
-<script src="tracking.js"></script>
 <script>
 (function(){
-  const icons = ["1","2","3","4","5","6"];
-  function render(record){
-    const lang = masarGetLang();
-    const dict = MASAR_DICT[lang];
-    const labels = [dict.t1, dict.t2, dict.t3, dict.t4, dict.t5, dict.t6];
-    document.getElementById("emptyWrap").hidden = true;
-    document.getElementById("resultWrap").hidden = false;
-    document.getElementById("toLabel").textContent = record.dest[lang] || record.dest.ar;
-    document.getElementById("carrierName").textContent = record.carrier;
-    document.getElementById("etaDate").textContent = record.eta.toLocaleDateString(lang === "ar" ? "ar-SA" : (lang === "ur" ? "ur-PK" : "en-US"), { year:"numeric", month:"long", day:"numeric" });
-    const track = document.getElementById("timelineTrack");
-    track.innerHTML = "";
-    labels.forEach((label, i) => {
-      const item = document.createElement("div");
-      item.className = "t-item" + (i < record.stage ? " done" : (i === record.stage ? " current" : ""));
-      item.innerHTML = `<div class="t-dot">${i <= record.stage ? icons[i] : ""}</div><div><b>${label}</b></div>`;
-      track.appendChild(item);
+  var API_BASE = window.location.port === '3001' ? '' : 'http://localhost:3001';
+  var currentTab = 'aramex';
+  var form = document.getElementById('trackForm');
+  var inp = document.getElementById('trackInput');
+  var phoneField = document.getElementById('phoneField');
+  var trackErr = document.getElementById('trackErr');
+  var trackBtn = document.getElementById('trackBtn');
+  var trackBtnText = document.getElementById('trackBtnText');
+  var trackHint = document.getElementById('trackHint');
+  var trackResult = document.getElementById('trackResult');
+
+  document.querySelectorAll('.track-tabs button').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.track-tabs button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentTab = btn.dataset.tab;
+      trackResult.innerHTML = '';
+      if(currentTab === 'aramex'){
+        inp.placeholder = '\u0623\u062f\u062e\u0644 \u0631\u0642\u0645 \u0628\u0648\u0644\u064a\u0635\u0629 \u0623\u0631\u0627\u0645\u0643\u0633 (AWB)';
+        trackBtnText.textContent = '\u062a\u062a\u0628\u0639 \u0627\u0644\u0634\u062d\u0646\u0629';
+        trackBtn.className = 'btn btn-primary';
+        trackHint.textContent = '\u0631\u0642\u0645 \u0628\u0648\u0644\u064a\u0635\u0629 \u0623\u0631\u0627\u0645\u0643\u0633 \u064a\u0638\u0647\u0631 \u0641\u064a \u0625\u0634\u0639\u0627\u0631 \u0627\u0644\u0634\u062d\u0646 \u0623\u0648 \u0645\u0646 \u0641\u0631\u064a\u0642 \u062a\u0631\u0627\u0643 \u0633\u0633\u062a\u0645.';
+        phoneField.hidden = true;
+      } else {
+        inp.placeholder = '\u0645\u062b\u0627\u0644: TS-261027-4821';
+        trackBtnText.textContent = '\u0627\u0633\u0623\u0644 \u0639\u0644\u0649 \u0648\u0627\u062a\u0633\u0627\u0628';
+        trackBtn.className = 'btn btn-wa';
+        trackHint.textContent = '\u0631\u0642\u0645 \u0627\u0644\u0637\u0644\u0628 \u064a\u0628\u062f\u0623 \u0628\u0640 TS \u0648\u064a\u0638\u0647\u0631 \u0641\u064a \u0631\u0633\u0627\u0644\u0629 \u0648\u0627\u062a\u0633\u0627\u0628 \u0627\u0644\u062a\u064a \u0623\u0631\u0633\u0644\u062a\u0647\u0627 \u0639\u0646\u062f \u0627\u0644\u0637\u0644\u0628.';
+        phoneField.hidden = false;
+      }
     });
-  }
-  document.getElementById("trackForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const record = await masarResolveTracking(document.getElementById("trackInput").value);
-    if(record) render(record);
   });
-  document.getElementById("sampleBtn").addEventListener("click", async (event) => {
-    event.preventDefault();
-    document.getElementById("trackInput").value = "TS-774213-SA";
-    const record = await masarResolveTracking("TS-774213-SA");
-    if(record) render(record);
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    var code = inp.value.trim();
+    if(!code){ trackErr.hidden=false; trackErr.textContent='\u0623\u062f\u062e\u0644 \u0631\u0642\u0645 \u0627\u0644\u0634\u062d\u0646\u0629 \u0623\u0648 \u0627\u0644\u0637\u0644\u0628.'; inp.closest('.field').classList.add('has-error'); return; }
+    trackErr.hidden=true; inp.closest('.field').classList.remove('has-error');
+    if(currentTab==='whatsapp'){ var dict=MASAR_DICT[masarGetLang()]; var ph=document.getElementById('trackPhone').value.trim(); var lines=[dict.track_msg+' '+code.toUpperCase()]; if(ph) lines.push(dict.track_msg_phone+': '+ph); window.open(tsWaLink(lines.join('\n')),'_blank','noopener'); return; }
+    trackResult.innerHTML='<div class="track-loading"><div class="spinner"></div><p>\u062c\u0627\u0631\u064a \u0627\u0644\u062a\u062a\u0628\u0639 \u0645\u0646 \u0623\u0631\u0627\u0645\u0643\u0633...</p></div>';
+    try{
+      var res=await fetch(API_BASE+'/api/track',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({awb:code})});
+      var data=await res.json();
+      if(!data.ok){ trackResult.innerHTML='<div class="track-error">\u26a0\ufe0f '+esc(data.error||'\u062e\u0637\u0623 \u0641\u064a \u0627\u0644\u062a\u062a\u0628\u0639')+'</div>'; return; }
+      if(!data.shipments||data.shipments.length===0||data.shipments.every(function(s){return s.updates.length===0;})){ trackResult.innerHTML='<div class="track-error">\u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0639\u062b\u0648\u0631 \u0639\u0644\u0649 \u062a\u062d\u062f\u064a\u062b\u0627\u062a. \u062a\u0623\u0643\u062f \u0645\u0646 \u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064a\u0635\u0629.</div>'; return; }
+      var html='';
+      for(var i=0;i<data.shipments.length;i++){var ship=data.shipments[i];html+='<div class="track-awb-badge"><div><div class="awb-label">\u0631\u0642\u0645 \u0627\u0644\u0628\u0648\u0644\u064a\u0635\u0629</div><div class="awb-num">'+esc(ship.awb)+'</div></div><span class="aramex-badge">Aramex</span></div><ul class="track-timeline">';var ups=ship.updates.sort(function(a,b){return new Date(b.date)-new Date(a.date);});for(var j=0;j<ups.length;j++){var u=ups[j];var dt=u.date?fmtDate(u.date):'';html+='<li><div class="tl-date">'+esc(dt)+'</div><div class="tl-desc">'+esc(u.description||u.code)+'</div>'+(u.location?'<div class="tl-loc">\ud83d\udccd '+esc(u.location)+'</div>':'')+'</li>';}html+='</ul>';}
+      trackResult.innerHTML=html;
+    }catch(err){ trackResult.innerHTML='<div class="track-error">\u26a0\ufe0f \u0644\u0645 \u064a\u062a\u0645 \u0627\u0644\u0627\u062a\u0635\u0627\u0644 \u0628\u0627\u0644\u0633\u064a\u0631\u0641\u0631 (localhost:3001)<br><small>'+esc(err.message)+'</small></div>'; }
   });
-  window.addEventListener("masar:langchange", async () => {
-    const value = document.getElementById("trackInput").value;
-    if(value && !document.getElementById("resultWrap").hidden){
-      const record = await masarResolveTracking(value);
-      if(record) render(record);
-    }
-  });
+  function esc(s){var m={'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"};return String(s||'').replace(/[&<>"']/g,function(c){return m[c];});}
+  function fmtDate(d){if(typeof d==='string'&&d.indexOf('/Date(')!==-1){var ms=parseInt(d.replace(/\/Date\((-?\d+).*\)\//,'$1'));if(!isNaN(ms))d=new Date(ms);}if(typeof d==='string')d=new Date(d);if(!(d instanceof Date)||isNaN(d))return String(d);return d.toLocaleDateString('ar-SA',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 })();
 </script>
 </body>

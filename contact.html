@@ -3,35 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#07111F">
-<title>تواصل معنا | Track Ship</title>
-<meta name="description" content="عنوان شركة تراك سيستمز الوطني في الرياض، الهاتف والبريد والسجل التجاري.">
+<meta name="theme-color" content="#0A1830">
+<title>تواصل معنا | Track System</title>
+<meta name="description" content="تواصل مع Track System على واتساب أو بالهاتف أو البريد. العنوان الوطني لشركة تراك سيستمز في الرياض.">
+<link rel="icon" href="logo.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <header class="site-header">
   <div class="wrap nav">
-    <a href="index.html" class="brand" aria-label="Track Ship">
-      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M5 23c4-7 8-10 12-9" stroke="#E10600" stroke-width="2.4" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E10600"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
-      <span class="brand-text"><span class="brand-en">Track <i>Ship</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستمز</span></span>
+    <a href="index.html" class="brand" aria-label="Track System">
+      <span class="brand-mark"><img src="logo.png" alt="" onerror="this.parentNode.classList.add('no-logo');this.remove()"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 23c4-7 8-10 12-9" stroke="#E3141B" stroke-width="2.6" stroke-linecap="round"/><circle cx="22" cy="12" r="5" fill="#E3141B"/><circle cx="22" cy="12" r="1.8" fill="#fff"/></svg></span>
+      <span class="brand-text"><span class="brand-en">Track <i>System</i></span><span class="brand-sub" data-i18n="brand_sub">تراك سيستم</span></span>
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="index.html" data-i18n="nav_home">الرئيسية</a>
       <a href="index.html#services" data-i18n="nav_services">الخدمات</a>
+      <a href="index.html#rates" data-i18n="nav_rates">الأسعار</a>
       <a href="tracking.html" data-i18n="nav_track">تتبع الشحنة</a>
-      <a href="cart.html" data-i18n="nav_cart">السلة</a>
       <a href="contact.html" aria-current="page" data-i18n="nav_contact">تواصل معنا</a>
     </nav>
     <div class="nav-right">
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="ar">AR</button>
         <button type="button" data-lang="en">EN</button>
-        <button type="button" data-lang="ur">UR</button>
       </div>
-      <a class="icon-cart" href="cart.html" aria-label="Cart">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6L5 3H2"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/></svg>
-        <span class="cart-count" data-cart-count hidden>0</span>
-      </a>
+      <a class="icon-btn" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></a>
       <a href="calculator.html" class="btn btn-primary btn-sm" data-i18n="nav_order">اطلب شحن</a>
       <button class="burger" type="button" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -41,65 +38,89 @@
 <main class="wrap section-tight">
   <div class="page-hero">
     <span class="kicker" data-i18n="contact_eyebrow">التواصل</span>
-    <h1 data-i18n="contact_h1">تواصل مع تراك سيستمز</h1>
-    <p class="lede" data-i18n="contact_lede">للاستفسار عن شحنة أو سعر، أرسل الرسالة أو اتصل بنا.</p>
+    <h1 data-i18n="contact_h1">تحدث مع Track System</h1>
+    <p class="lede" data-i18n="contact_lede">للاستفسار عن شحنة أو سعر، اكتب رسالتك وتصلنا على واتساب، أو اتصل بنا.</p>
   </div>
+
+  <div class="quick-contact">
+    <a class="wa" data-wa-hello href="https://wa.me/966597281619" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm5.8 14.03c-.24.68-1.42 1.31-1.96 1.36-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.83 0-1.34.7-2 .95-2.28.25-.27.54-.34.72-.34h.52c.17 0 .39-.06.61.47.24.56.79 1.92.86 2.06.07.14.11.3.02.48-.09.18-.14.3-.27.46-.14.16-.29.36-.41.48-.14.14-.28.28-.12.56.16.27.72 1.18 1.54 1.91 1.06.95 1.96 1.24 2.23 1.38.28.14.44.11.6-.07.16-.18.69-.8.88-1.08.18-.27.37-.23.61-.14.25.09 1.58.75 1.85.88.27.14.45.2.52.32.07.11.07.66-.17 1.33Z"/></svg></span>
+      <span><span data-i18n="wa_label">واتساب</span><small>+966 59 728 1619</small></span>
+    </a>
+    <a href="tel:+966597281619">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2Z"/></svg></span>
+      <span><span data-i18n="c_phone_h">الهاتف وواتساب</span><small>+966 59 728 1619</small></span>
+    </a>
+    <a href="mailto:info@tracksystems.com.sa">
+      <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+      <span><span data-i18n="c_email_h">البريد</span><small>info@tracksystems.com.sa</small></span>
+    </a>
+  </div>
+
   <div class="contact-grid">
-    <form class="panel" id="contactForm">
-      <div class="field">
-        <label for="cName" data-i18n="c_name">الاسم</label>
-        <input class="input" id="cName" name="name" required>
-      </div>
+    <form class="panel" id="contactForm" novalidate>
       <div class="row2">
         <div class="field">
-          <label for="cPhone" data-i18n="c_phone">الجوال</label>
-          <input class="input" id="cPhone" name="phone" type="tel" required dir="ltr">
+          <label for="cName" data-i18n="c_name">الاسم</label>
+          <input class="input" id="cName" name="name" autocomplete="name">
         </div>
         <div class="field">
-          <label for="cEmail" data-i18n="c_email">البريد</label>
-          <input class="input" id="cEmail" name="email" type="email" required dir="ltr">
+          <label for="cPhone" data-i18n="c_phone">الجوال</label>
+          <input class="input latin" id="cPhone" name="phone" type="tel" dir="ltr" autocomplete="tel">
         </div>
       </div>
       <div class="field">
         <label for="cMsg" data-i18n="c_msg">الرسالة</label>
-        <textarea class="input" id="cMsg" name="message" rows="5" required></textarea>
+        <textarea class="input" id="cMsg" name="message" rows="5"></textarea>
+        <p class="field-error" id="cErr" hidden></p>
       </div>
-      <button class="btn btn-primary btn-block" type="submit" data-i18n="c_submit">إرسال</button>
+      <button class="btn btn-wa btn-block" type="submit"><span data-i18n="c_submit">أرسل على واتساب</span></button>
     </form>
-    <div>
-      <div class="panel">
-        <h2 data-i18n="c_info_h">بيانات الشركة</h2>
-        <div class="info-row"><div><b>Track Systems Company</b><span data-i18n="c_addr_v">حي الدريهمية، شارع صيدا، مبنى 7036، الرقم الفرعي 2487، الرياض 12796. العنوان المختصر RBDA7036.</span></div></div>
-        <div class="info-row"><div><b data-i18n="c_phone_h">الهاتف</b><a dir="ltr" href="tel:+966597281619">+966 59 728 1619</a></div></div>
-        <div class="info-row"><div><b data-i18n="c_email_h">البريد</b><a href="mailto:info@tracksystems.com.sa">info@tracksystems.com.sa</a></div></div>
-        <div class="info-row"><div><b data-i18n="c_cr_h">السجل التجاري</b><span>7055013747</span></div></div>
-        <div class="info-row"><div><b data-i18n="c_vat_h">الرقم الضريبي</b><span>314968452300003</span></div></div>
-        <div class="info-row"><div><b>المتجر</b><a href="https://stor.tracksystems.com.sa/">stor.tracksystems.com.sa</a></div></div>
+    <div class="panel">
+      <h2 data-i18n="c_info_h">بيانات الشركة</h2>
+      <div class="info-list">
+        <div><b>شركة تراك سيستمز · Track Systems Company</b></div>
+        <div><b data-i18n="c_addr_h">العنوان الوطني</b><span data-i18n="c_addr_v">حي الدريهمية، شارع صيدا، مبنى 7036، الرقم الفرعي 2487، الرياض 12796. العنوان المختصر RBDA7036.</span></div>
+        <div><b data-i18n="c_cr_h">السجل التجاري</b><span class="latin">7055013747</span></div>
+        <div><b data-i18n="c_vat_h">الرقم الضريبي</b><span class="latin">314968452300003</span></div>
+        <div><b data-i18n="c_store_h">المتجر</b><a class="latin" href="https://stor.tracksystems.com.sa/">stor.tracksystems.com.sa</a></div>
       </div>
-      <div class="panel" style="margin-top:16px;padding:0;overflow:hidden">
+      <div style="margin-top:18px;border-radius:14px;overflow:hidden;border:1px solid var(--line)">
         <iframe title="Track Systems Riyadh" src="https://maps.google.com/maps?q=Al%20Duraihemyah%20Riyadh&z=14&output=embed" width="100%" height="220" style="border:0;display:block" loading="lazy"></iframe>
       </div>
     </div>
   </div>
 
-  <section class="section-tight" style="max-width:760px">
+  <section class="section-tight faq">
     <h2 data-i18n="faq_h2">أسئلة شائعة</h2>
-    <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="faq_q1">هل السعر في السلة هو السعر النهائي؟</span><span>+</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a1">نعم للبيانات التي أدخلتها، ويشمل ضريبة 15٪. قد يتعدل إذا اختلف الوزن أو القياس عند الاستلام.</div></div></div>
-    <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="faq_q2">كيف أطلب شحنًا مبردًا؟</span><span>+</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a2">من أيقونة الشحن المبرد. ستجد الوزن والوجهة وبيانات الطرفين ودرجة الحرارة.</div></div></div>
-    <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="faq_q3">هل شحن السودان منفصل؟</span><span>+</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a3">نعم. له صفحة خاصة تختار فيها مدينة سودانية وتكتب المحتويات.</div></div></div>
-    <div class="faq-item"><button class="faq-q" type="button"><span data-i18n="faq_q4">أين أدفع؟</span><span>+</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a4">بعد السلة تنتقل إلى متجر الشركة على stor.tracksystems.com.sa لإتمام الطلب.</div></div></div>
+    <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false"><span data-i18n="faq_q1">هل السعر في الصفحة نهائي؟</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a1"></div></div></div>
+    <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false"><span data-i18n="faq_q2">ماذا يحدث بعد الضغط على «أرسل الطلب على واتساب»؟</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a2"></div></div></div>
+    <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false"><span data-i18n="faq_q3">هل شحن السودان منفصل؟</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a3"></div></div></div>
+    <div class="faq-item"><button class="faq-q" type="button" aria-expanded="false"><span data-i18n="faq_q4">كيف أطلب شحنًا مبردًا؟</span></button><div class="faq-a"><div class="faq-a-in" data-i18n="faq_a4"></div></div></div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span></div>
+  <div class="wrap footer-bottom"><span data-i18n="foot_rights">© 2026 شركة تراك سيستمز. جميع الحقوق محفوظة.</span><a class="latin" dir="ltr" href="tel:+966597281619">+966 59 728 1619</a></div>
 </footer>
+
 <script src="i18n.js"></script>
 <script>
   document.getElementById("contactForm").addEventListener("submit", (event) => {
     event.preventDefault();
-    masarToast(MASAR_DICT[masarGetLang()].c_toast);
-    event.target.reset();
+    const dict = MASAR_DICT[masarGetLang()];
+    const name = document.getElementById("cName").value.trim();
+    const phone = document.getElementById("cPhone").value.trim();
+    const msg = document.getElementById("cMsg").value.trim();
+    const err = document.getElementById("cErr");
+    const ok = name.length >= 2 && msg.length >= 2;
+    err.hidden = ok;
+    err.textContent = ok ? "" : dict.c_err;
+    if(!ok) return;
+    const lines = [dict.c_msg_title, `${dict.c_name}: ${name}`];
+    if(phone) lines.push(`${dict.c_phone}: ${phone}`);
+    lines.push("", msg);
+    window.open(tsWaLink(lines.join("\n")), "_blank", "noopener");
   });
 </script>
 </body>
